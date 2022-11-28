@@ -16,11 +16,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link rel="stylesheet" href="../style/style.css">
-    <title>Document</title>
+    <title>Hotel Booking App</title>
 </head>
 <body>
 
     <div class="bg-image">
+      <h1>Create account</h1>
       <div class="card">
         <div class="row">
           <div class="col s12 center-align">
