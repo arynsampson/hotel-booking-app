@@ -5,12 +5,14 @@
         private $lastname;
         private $email;
         private $password;
+        private $role;
 
-        public function __construct($firstname, $lastname, $email, $password) {
+        public function __construct($firstname, $lastname, $email, $password, $role) {
             $this->firstname = $firstname;
             $this->lastname = $lastname;
             $this->email = $email;
             $this->password = $password;
+            $this->role = $role;
         }
 
         public function getName() {
@@ -32,7 +34,6 @@
         public function setEmail($email) {
             $this->email = $email;
         }
-
     }
-
+    
 ?>
