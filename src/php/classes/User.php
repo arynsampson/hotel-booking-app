@@ -18,7 +18,7 @@
         }
 
         public function getEmail() {
-            echo $this-email;
+            echo $this->email;
         }
 
         public function setFirstname($firstname) {
