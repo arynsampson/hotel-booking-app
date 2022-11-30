@@ -1,7 +1,18 @@
 <?php
 
+    require '../php/user_handling/register_handler.php';
+    require '../validations/input_validator.php';
+
     if(isset($_POST['submit'])) {
-        
+
+        $user_data = array(
+          'firstname' => validate_input($_POST['firstname']),
+          'lastname' => validate_input($_POST['lastname']),
+          'email' => validate_email($_POST['email']),
+          'password' => validate_input($_POST['password']),
+        );
+
+        registerUser($user_data);
     }
 
 ?>
@@ -20,13 +31,15 @@
 </head>
 <body>
 
+    <?php require './src/templates/header.php'; ?>
+
     <div class="bg-image">
       <h1>Create account</h1>
       <div class="card">
         <div class="row">
           <div class="col s12 center-align">
             <div class="row">
-              <form action="register.php" method="POST" class="col s12">
+              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="col s12">
                 <div class="row">
                   <div class="input-field col s12">
                     <label for="first_name">First name:</label>
@@ -45,9 +58,10 @@
                     <label for="password">Password:</label>
                   </div>
                 </div>
+                <p><?php echo $_SESSION[1]['register'] ?? '' ?></p>
                 <div class="row">
                   <div class="input-field col s12">
-                    <input id="submit" type="submit" class="btn" name="Register" value="Register">
+                    <input id="submit" type="submit" class="btn" name="submit" value="Register">
                   </div>
                 </div>
               </form>
