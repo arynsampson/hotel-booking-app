@@ -31,7 +31,7 @@
             header('Location: ../../index.php');
         } else {
             // already existing user
-            $_SESSION['register_error'] = 'The email address entered is already associated with a registered account.';
+            $_SESSION['error'] = 'The email address entered is already associated with a registered account.';
 
         }
         
