@@ -1,8 +1,16 @@
 <?php
 
-    if(isset($_POST['submit'])) {
-        
-    }
+require '../php/user_handling/sign_in_handler.php';
+require '../validations/input_validator.php';
+
+  if(isset($_POST['submit'])) {
+    $user = array(
+      'email' => validate_email($_POST['email']),
+      'password' => validate_input($_POST['password'])
+    );
+
+    signUserIn($user);
+  }
 
 ?>
 
@@ -20,13 +28,15 @@
 </head>
 <body>
 
+    <?php require '../../src/templates/header.php'; ?>
+
     <div class="bg-image">
       <h1>Sign in</h1>
       <div class="card">
         <div class="row">
           <div class="col s12 center-align">
             <div class="row">
-              <form action="register.php" method="POST" class="col s12">
+              <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="col s12">
                 <div class="row">
                   <div class="input-field col s12">
                     <input id="email" type="email" class="validate" name="email" required>
@@ -39,9 +49,10 @@
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
-                    <input id="submit" type="submit" class="btn" name="Register" value="Register">
+                    <input id="submit" type="submit" class="btn" name="submit" value="Sign in">
                   </div>
                 </div>
+                <p><?php echo $_SESSION['error'] ?? '' ; ?></p>
               </form>
             </div>
           </div>
