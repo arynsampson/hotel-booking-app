@@ -6,7 +6,7 @@
 
     function signUserIn($user) {
 
-        // session_unset();
+        session_unset();
         global $conn;
 
         $firstname = $lastname = '';
@@ -25,7 +25,9 @@
             $_SESSION['lastname'] = $user['lastname'];
             $_SESSION['email'] = $email;
 
-            $_SESSION['loggedIn'] = true;
+            $_SESSION['isLoggedIn'] = true;
+
+            mysqli_free_result($result);
             header('Location: ../../index.php');
         } else {
             // already existing user
@@ -35,4 +37,3 @@
         
     }
 
-?>
