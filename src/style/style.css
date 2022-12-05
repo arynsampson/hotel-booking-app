@@ -1,0 +1,101 @@
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-family: sans-serif;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100vh;
+}
+
+.main-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* HEADER BAR */
+.header {
+    background-color: grey;
+}
+
+.header-content-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+}
+
+.heading {
+    font-size: 38px;
+    margin: 0;
+}
+
+.nav-items-list {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-item {
+    padding: 5px; 
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+}
+
+.nav-item:hover {
+    color: lightblue;
+    cursor: pointer;
+}
+
+/* REGISTER / SIGN IN */
+.bg-image {
+    background-image: url('https://img.freepik.com/premium-photo/abstract-blur-luxury-hotel-lobby-background_1339-98449.jpg?w=2000');
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* INDEX/HOME */
+.card {
+    width: 600px;
+    padding: 10px;
+    margin: 0 auto;
+    background-color: ghostwhite;
+}
+
+.row {
+    margin-bottom: 10px;
+}
+
+ul {
+    width: 100%;
+}
+
+.cards-container {
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.card {
+    width: 100%;
+    margin: 0;
+}
+
+.hotel-img {
+    display: block;
+    max-width: 100%;
+}
