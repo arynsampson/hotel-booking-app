@@ -1,7 +1,7 @@
 <?php
 
     require '../../config/connect.php';
-    require '../../src/php/classes/User.php';
+    require '../../src/php/classes/User.class.php';
 
     session_start();
 
