@@ -1,7 +1,5 @@
 <?php
 
-    require './config/connect.php';
-
     $sql = "SELECT * FROM hotel;";
 
     $result = $conn->query($sql);
