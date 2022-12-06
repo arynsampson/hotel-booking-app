@@ -1,7 +1,8 @@
 <?php
     session_start();
-
+    require './config/connect.php';
     require './config/query/fetchHotels.php';
+    
 ?>
 
 <!DOCTYPE html>
