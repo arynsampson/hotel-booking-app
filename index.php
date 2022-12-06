@@ -1,5 +1,7 @@
 <?php
     session_start();
+
+    require './config/query/fetchHotels.php';
 ?>
 
 <!DOCTYPE html>
@@ -19,26 +21,14 @@
 
     <div class="container">
         <div class="cards-container">
-            <div class="card col s4">
-                <img src="https://thumbs.dreamstime.com/b/hotel-13341433.jpg" alt="" class="hotel-img">
-                <h4>One&Only</h4>
-            </div>
-            <div class="card col s4">
-                <img src="https://thumbs.dreamstime.com/b/hotel-13341433.jpg" alt="" class="hotel-img">
-                <h4>One&Only</h4>
-            </div>
-            <div class="card col s4">
-                <img src="https://thumbs.dreamstime.com/b/hotel-13341433.jpg" alt="" class="hotel-img">
-                <h4>One&Only</h4>
-            </div>
-            <div class="card col s4">
-                <img src="https://thumbs.dreamstime.com/b/hotel-13341433.jpg" alt="" class="hotel-img">
-                <h4>One&Only</h4>
-            </div>
-            <div class="card col s4">
-                <img src="https://thumbs.dreamstime.com/b/hotel-13341433.jpg" alt="" class="hotel-img">
-                <h4>One&Only</h4>
-            </div>
+            <?php foreach($hotels as $hotel): ?>
+                <div class="card col s4">
+                    <div class="img-wrapper">
+                        <img src="<?php echo $hotel['thumbnail'] ?>" alt="<?php echo $hotel['name'] ?>" class="hotel-img">
+                    </div>
+                    <a href="<?php echo './src/views/hotel_details.view.php/?id='.$hotel['id']; ?>"><h4 class="hotel-name"><?php echo $hotel['name']; ?></h4></a>
+                </div> 
+            <?php endforeach; ?>
         </div>
     </div>
 
