@@ -13,7 +13,7 @@
         $email = $user['email'];
         $password = $user['password'];
 
-        $sql = "SELECT * FROM user WHERE user.email = '$email'";
+        $sql = "SELECT id, firstname, lastname, email FROM user WHERE user.email = '$email'";
         
         $result = $conn->query($sql);
 
@@ -21,9 +21,8 @@
             // register new user
             $user = $result->fetch_assoc();
 
-            $_SESSION['firstname'] = $user['firstname'];
-            $_SESSION['lastname'] = $user['lastname'];
-            $_SESSION['email'] = $email;
+            $_SESSION['loggedInUser'] = $user;
+            $_SESSION['fullname'] = $user['firstname'] . ' ' . $user['lastname'];
 
             $_SESSION['isLoggedIn'] = true;
 
