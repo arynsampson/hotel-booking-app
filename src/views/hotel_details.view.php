@@ -8,20 +8,15 @@
     if($_SESSION['isLoggedIn'] === false) {
         header('Location: /hotel-booking-app/src/views/sign_in.view.php');
     }
-
-    
-    $url = 'localhost'.$_SERVER['REQUEST_URI'];
-    $res = parse_url($url);
-    parse_str($res['query'], $params);
-    
-    $hotel = fetchHotel($params['id']);
-
-    print_r($_SESSION);
-
         
     if(isset($_POST['booking-hotel'])) {
         $_SESSION['booking-information'] = $_POST;
         header('Location: /hotel-booking-app/src/views/confirm_booking.view.php');
+    } else {
+        $url = 'localhost'.$_SERVER['REQUEST_URI'];
+        $res = parse_url($url);
+        parse_str($res['query'], $params);
+        $hotel = fetchHotel($params['id']);
     }
 
 ?> 
