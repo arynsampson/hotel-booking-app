@@ -25,6 +25,7 @@
             $_SESSION['fullname'] = $user['firstname'] . ' ' . $user['lastname'];
 
             $_SESSION['isLoggedIn'] = true;
+            $_SESSION['bookings'] = [];
 
             mysqli_free_result($result);
             header('Location: ../../index.php');
