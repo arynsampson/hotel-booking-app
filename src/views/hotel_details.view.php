@@ -17,6 +17,7 @@
         $res = parse_url($url);
         parse_str($res['query'], $params);
         $hotel = fetchHotel($params['id']);
+        $_SESSION['hotel_id'] = $params['id'];
     }
 
 ?> 
