@@ -17,7 +17,7 @@
     if(isset($_POST['confirm-booking'])) {
 
         $booking = new Booking(
-            $_SESSION['loggedInUser']['fullname'],
+            $_SESSION['fullname'],
             $_SESSION['loggedInUser']['email'],
             $booking_info['hotel_name'],
             $booking_info['total_cost'],
@@ -28,9 +28,11 @@
 
         global $conn;
 
-        $sql = "INSERT INTO booking (user_id, hotel_id, check_in_date, check_out_date, total, status) VALUES (
+        $sql = "INSERT INTO booking (user_id, username, hotel_id, hotel_name, check_in_date, check_out_date, total, status) VALUES (
             '".$_SESSION['loggedInUser']['id']."',
-            2,
+            '".$_SESSION['fullname']."',
+            '".$_SESSION['hotel_id']."',
+            '".$_SESSION['hotel']['name']."',
             '".$_SESSION['booking-information']['check-in']."',
             '".$_SESSION['booking-information']['check-out']."',
             '".$booking_info['total_cost']."',
