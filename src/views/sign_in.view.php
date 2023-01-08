@@ -1,7 +1,7 @@
 <?php
 
 require '../php/user_handling/sign_in_handler.php';
-require '../validations/input_validator.php';
+require '../php/validations/input_validator.php';
 
   if(isset($_POST['submit'])) {
     $user = array(
