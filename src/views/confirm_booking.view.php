@@ -4,14 +4,17 @@
 
     require '../php/classes/Booking.class.php';
     require '../../config/connect.php';
+    require '../php/utilities/dateDifference.php';
+    require '../php/utilities/totalStayCost.php';
+
+    $num_nights = dateDifference($_SESSION['booking-information']['check-in'], $_SESSION['booking-information']['check-out']);
+    $totalStayCost = totalStayCost($num_nights, $_SESSION['hotel']['daily_rate']);
 
     $booking_info = array(
         "hotel_name" => $_SESSION['hotel']['name'],
-        "num_rooms" => 2,
-        "num_nights" => 3,
-        "daily_rate" => 2700,
-        "rating" => 5,
-        "total_cost" => $booking_info['total_cost']
+        "num_nights" => $num_nights,
+        "daily_rate" => $_SESSION['hotel']['daily_rate'],
+        "total_cost" => $totalStayCost
     );
 
     if(isset($_POST['confirm-booking'])) {
@@ -31,7 +34,7 @@
         $sql = "INSERT INTO booking (user_id, username, hotel_id, hotel_name, check_in_date, check_out_date, total, status) VALUES (
             '".$_SESSION['loggedInUser']['id']."',
             '".$_SESSION['fullname']."',
-            '".$_SESSION['hotel_id']."',
+            '".$_SESSION['hotel']['id']."',
             '".$_SESSION['hotel']['name']."',
             '".$_SESSION['booking-information']['check-in']."',
             '".$_SESSION['booking-information']['check-out']."',
@@ -79,10 +82,8 @@
                 <h4>Hotel details:</h4>
                 <div class="booking-info">
                     <p>Hotel name: <?php echo $booking_info['hotel_name']; ?></p>
-                    <p>Number of rooms: <?php echo $booking_info['num_rooms']; ?></p>
                     <p>Amount of nights: <?php echo $booking_info['num_nights']; ?></p>
                     <p>Price per night: R<?php echo $booking_info['daily_rate']; ?></p>
-                    <p>Rating: <?php echo $booking_info['rating']; ?></p>
                     <p>Total cost: R<?php echo $booking_info['total_cost']; ?></p>
                 </div>
             </div>
