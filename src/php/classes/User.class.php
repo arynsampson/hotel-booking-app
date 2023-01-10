@@ -1,26 +1,27 @@
 <?php
 
+include_once 'DB.class.php';
+
     class User {
+        private $id;
         private $firstname;
         private $lastname;
         private $email;
         private $password;
-        private $role;
 
-        public function __construct($firstname, $lastname, $email, $password, $role) {
+        public function __construct($firstname, $lastname, $email, $password) {
             $this->firstname = $firstname;
             $this->lastname = $lastname;
             $this->email = $email;
             $this->password = $password;
-            $this->role = $role;
         }
 
         public function getName() {
-            echo $this->firstname . $this->lastname;
+            return $this->firstname . ' ' . $this->lastname;
         }
 
         public function getEmail() {
-            echo $this->email;
+            return $this->email;
         }
 
         public function setFirstname($firstname) {
