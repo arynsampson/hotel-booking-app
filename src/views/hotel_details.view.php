@@ -10,18 +10,12 @@
         header('Location: /hotel-booking-app/src/views/sign_in.view.php');
     }
 
-    // $url = 'localhost'.$_SERVER['REQUEST_URI'];
-    // $res = parse_url($url);
-    // parse_str($res['query'], $params);
-    // $hotel = fetchHotel($params['id']);
-    // $_SESSION['hotel_id'] = $params['id'];
+    $hotel = fetchHotel($_GET['id']);
         
     if(isset($_POST['booking-hotel'])) {
         $hotel_dates = validateDates($_POST['check-in'], $_POST['check-out']);
 
-        print_r($hotel_dates);
-
-        if(empty($hotel_dates[1])) {
+        if(empty($hotel_dates[1][0])) {
             $_SESSION['booking-information'] = $_POST;
             header('Location: /hotel-booking-app/src/views/confirm_booking.view.php');
         }
@@ -47,7 +41,7 @@
     <div class="main-container">
         <div class="hotel-details-card">
     
-            <!-- <h2 class="hotel-name"><?php echo $hotel['name']; ?></h2>
+            <h2 class="hotel-name"><?php echo $hotel['name']; ?></h2>
             <img src="<?php echo $hotel['thumbnail']; ?>" alt="hotel-img" class="hotel-img">
 
             <div class="hotel-info-wrapper">
@@ -64,18 +58,18 @@
                     <p class="hotel-feature">Free breakfast</p>
                     <p class="hotel-feature">Bar</p>
                 </div>
-            </div> -->
+            </div>
 
             <div class="hotel-dates">
-                <form action="hotel_details.view.php" method="POST" class="dates-form">
+                <form action="<?php echo '/hotel-booking-app/src/views/hotel_details.view.php/?id='.$_GET['id']; ?>" method="POST" class="dates-form">
                     <div class="check-in-wrapper">
                         <label for="check-in">Check-in date:</label>
-                        <input type="date" name="check-in" value="<?php echo $hotel_dates[0]['check-in'] ?? ''; ?>">
+                        <input type="date" name="check-in" value="<?php echo $_POST['check-in'] ?? ''; ?>">
                         <p class="error"><?php echo $hotel_dates[1][1] ?? ''; ?></p>
                     </div>
                     <div class="check-out-wrapper">
                         <label for="check-in">Check-out date:</label>
-                        <input type="date" name="check-out" value="<?php echo $hotel_dates[0]['check-out'] ?? ''; ?>">
+                        <input type="date" name="check-out" value="<?php echo $_POST['check-out'] ?? ''; ?>">
                         <p class="error"><?php echo $hotel_dates[1][2] ?? ''; ?></p>
                     </div>
 
