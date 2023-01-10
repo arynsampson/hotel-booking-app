@@ -190,3 +190,8 @@ ul {
     width: 150px;
     padding: 6px 0;
 }
+
+.error {
+    color: red;
+    margin: 2px 0;
+}
