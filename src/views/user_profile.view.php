@@ -2,18 +2,22 @@
     session_start();
     require '../../config/connect.php';
     require '../../config/query/fetchUser.php';
+    require '../php/validations/input_validator.php';
 
     if(isset($_POST['update'])) {
-        $firstname = $_POST['firstname_update'];
-        $lastname = $_POST['lastname_update'];
-        $email = $_POST['email_update'];
+        // validate user input
+        $firstname = validate_input($_POST['firstname_update']);
+        $lastname = validate_input($_POST['lastname_update']);
+        $email = validate_email($_POST['email_update']);
+
+        // TEST NAME & EMAIL VALIDATIONS
 
         // update user object
 
 
         // update database
         global $conn;
-        $sql = "UPDATE user SET firstname='$firstname', lastname='$lastname', email='$email' WHERE user.id='".$_SESSION['loggedInUser']['id']."'";
+        $sql = "UPDATE user SET firstname='".$firstname['name']."', lastname='".$lastname['name']."', email='".$email['email']."' WHERE user.id='".$_SESSION['loggedInUser']['id']."'";
         $result = $conn->query($sql);
 
         // update session variable
@@ -46,14 +50,17 @@
                 <div>
                     <label for="firstname">Edit name:</label>
                     <input type="text" name="firstname_update" value="<?php echo $_SESSION['loggedInUser']['firstname']; ?>">
+                    <p class="error"><?php echo $firstname['error'] ?? ''; ?></p>
                 </div>
                 <div>
                     <label for="lastname">Edit lastname:</label>
                     <input type="text" name="lastname_update" value="<?php echo $_SESSION['loggedInUser']['lastname']; ?>">
+                    <p class="error"><?php echo $lastname['error'] ?? ''; ?></p>
                 </div>
                 <div>
                     <label for="lastname">Edit email:</label>
                     <input type="text" name="email_update" value="<?php echo $_SESSION['loggedInUser']['email']; ?>">
+                    <p class="error"><?php echo $email['error'] ?? ''; ?></p>
                 </div>
                 
                 <input type="submit" value="Update" name="update">
