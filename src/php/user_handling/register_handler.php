@@ -1,40 +1,35 @@
 <?php
 
-    require '../../config/connect.php';
-    require '../../src/php/classes/User.class.php';
+    require '../../../config/connect.php';
+    require '../classes/User.class.php';
+    require '../classes/Utils.class.php';
+    require '../classes/Auth.class.php';
 
-    session_start();
+    if(isset($_POST['submit'])) {
 
-    function registerUser($user) {
+        $utils = new Utils;
 
-        session_unset();
-        global $conn;
-        $firstname = $user['firstname'];
-        $lastname = $user['lastname'];
-        $email = $user['email'];
-        $password = $user['password'];
-        $role = 'READ-ONLY';
+        $user_input_data = array(
+          'firstname' => $utils->validate_firstname($_POST['firstname']),
+          'lastname' => $utils->validate_lastname($_POST['lastname']),
+          'email' => $utils->validate_email($_POST['email']),
+          'password' => $utils->validate_password($_POST['password']),
+        );
 
-        $sql = "SELECT * FROM user WHERE user.email = '$email'";
-        $insert_sql = "INSERT INTO user (firstname, lastname, email, password, role) VALUES ('$firstname', '$lastname', '$email', '$password', '$role');";
-        
-        $result = $conn->query($sql);
+        $auth = new Auth;
 
-        if($result->num_rows < 1) {
-            // register new user
-            $new_user = new User($firstname, $lastname, $email, $password, $role);
-            $insert_user_into_db = $conn->query($insert_sql);
-            $_SESSION['firstname'] = $firstname;
-            $_SESSION['lastname'] = $lastname;
-            $_SESSION['email'] = $email;
+        $doesUserExist = $utils->checkUserExists($user_input_data['email']);
 
-            header('Location: ../../index.php');
+        if(!$doesUserExist) {
+            $new_user_obj = new User($user_input_data['firstname'], $user_input_data['lastname'], $user_input_data['email'], $user_input_data['password']);
+            $new_user_db = $auth->register($user_input_data);
+            header('Location: ../../../index.php');
         } else {
-            // already existing user
             $_SESSION['error'] = 'The email address entered is already associated with a registered account.';
-
+            header('Location: ../../views/register.view.php');
         }
-        
+
     }
 
+    require '../../views/register.view.php';
 ?>
