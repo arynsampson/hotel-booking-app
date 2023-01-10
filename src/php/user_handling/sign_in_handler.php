@@ -13,7 +13,7 @@
         $email = $user['email'];
         $password = $user['password'];
 
-        $sql = "SELECT id, firstname, lastname, email FROM user WHERE user.email = '$email'";
+        $sql = "SELECT id, firstname, lastname, email FROM user WHERE user.email = '".$email['email']."'";
         
         $result = $conn->query($sql);
 
