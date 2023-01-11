@@ -7,17 +7,20 @@ include_once 'DB.class.php';
         private $firstname;
         private $lastname;
         private $email;
-        private $password;
 
-        public function __construct($firstname, $lastname, $email, $password) {
+        public function __construct($id, $firstname, $lastname, $email) {
+            $this->id = $id;
             $this->firstname = $firstname;
             $this->lastname = $lastname;
             $this->email = $email;
-            $this->password = $password;
         }
 
-        public function getName() {
-            return $this->firstname . ' ' . $this->lastname;
+        public function getFirstName() {
+            return $this->firstname;
+        }
+
+        public function getLastName() {
+            return $this->lastname;
         }
 
         public function getEmail() {
