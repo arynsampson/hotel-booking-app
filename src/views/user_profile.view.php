@@ -2,13 +2,14 @@
     session_start();
     require '../../config/connect.php';
     require '../../config/query/fetchUser.php';
-    require '../php/validations/input_validator.php';
+    require '../php/classes/Utils.php';
 
     if(isset($_POST['update'])) {
+        $utils = new Utils;
         // validate user input
-        $firstname = validate_input($_POST['firstname_update']);
-        $lastname = validate_input($_POST['lastname_update']);
-        $email = validate_email($_POST['email_update']);
+        $firstname = $utils->validate_firstname($_POST['firstname_update']);
+        $lastname = $utils->validate_lastname($_POST['lastname_update']);
+        $email = $utils->validate_email($_POST['email_update']);
 
         // TEST NAME & EMAIL VALIDATIONS
 

@@ -1,12 +1,13 @@
 <?php
 
 require '../php/user_handling/sign_in_handler.php';
-require '../php/validations/input_validator.php';
+require '../php/classes/Utils.php';
 
   if(isset($_POST['submit'])) {
+    $utils = new Utils;
     $user = array(
-      'email' => validate_email($_POST['email']),
-      'password' => validate_input($_POST['password'])
+      'email' => $utils->validate_email($_POST['email']),
+      'password' => $utils->validate_password($_POST['password'])
     );
 
     signUserIn($user);

@@ -4,7 +4,7 @@
     
     require '../../config/connect.php';
     require '../../config/query/fetchHotel.php';
-    require '../php/validations/dateValidator.php';
+    require '../php/classes/Utils.php';
 
     if($_SESSION['isLoggedIn'] === false) {
         header('Location: /hotel-booking-app/src/views/sign_in.view.php');
@@ -13,7 +13,8 @@
     $hotel = fetchHotel($_GET['id']);
         
     if(isset($_POST['booking-hotel'])) {
-        $hotel_dates = validateDates($_POST['check-in'], $_POST['check-out']);
+        $utils = new Utils;
+        $hotel_dates = $utils->validateDates($_POST['check-in'], $_POST['check-out']);
 
         if(empty($hotel_dates[1][0])) {
             $_SESSION['booking-information'] = $_POST;

@@ -4,11 +4,12 @@
 
     require '../php/classes/Booking.class.php';
     require '../../config/connect.php';
-    require '../php/utilities/dateDifference.php';
-    require '../php/utilities/totalStayCost.php';
+    require '../php/classes/Utils.php';
 
-    $num_nights = dateDifference($_SESSION['booking-information']['check-in'], $_SESSION['booking-information']['check-out']);
-    $totalStayCost = totalStayCost($num_nights, $_SESSION['hotel']['daily_rate']);
+    $utils = new Utils;
+
+    $num_nights = $utils->dateDifference($_SESSION['booking-information']['check-in'], $_SESSION['booking-information']['check-out']);
+    $totalStayCost = $utils->totalStayCost($num_nights, $_SESSION['hotel']['daily_rate']);
 
     $booking_info = array(
         "hotel_name" => $_SESSION['hotel']['name'],
