@@ -7,16 +7,16 @@ include_once 'DB.class.php';
         public function register($user) {
             $db = new DB;
             $conn = $db->getConn();
-            $insert_sql = "INSERT INTO user (firstname, lastname, email, password) VALUES (
+            $sql = "INSERT INTO user (firstname, lastname, email, password) VALUES (
                 '".$user['firstname']."', 
                 '".$user['lastname']."', 
                 '".$user['email']."', 
                 '".$user['password']."');";
-            $insert_user_into_db = $conn->query($insert_sql);
+            $insert_user_into_db = $conn->query($sql);
         }
 
         public function login() {
-
+            
         }
 
         public function logout() {
