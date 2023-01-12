@@ -1,6 +1,7 @@
 <?php
 
-    require '../../config/paths.php';
+    require $_SERVER["DOCUMENT_ROOT"].'/hotel-booking-app/config/paths.php';
+
     $navOptions = [];
 
     if($_SESSION['isLoggedIn']) {
