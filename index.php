@@ -1,13 +1,16 @@
 <?php
+
+    require './config/connect.php';
+    require './config/query/fetchHotels.php';
+    require './src/php/classes/User.class.php';
+
     session_start();
-    
+    $_SESSION['hotel'] = [];
+
     if(!isset($_SESSION['isLoggedIn'])) {
         $_SESSION['isLoggedIn'] = false;
     }
 
-    require './config/connect.php';
-    require './config/query/fetchHotels.php';
-    
 ?>
 
 <!DOCTYPE html>
