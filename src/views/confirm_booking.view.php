@@ -1,10 +1,9 @@
 <?php
 
-    session_start(); 
-
     require '../php/classes/Booking.class.php';
     require '../../config/connect.php';
     require '../php/classes/Utils.php';
+    session_start(); 
 
     $utils = new Utils;
 
