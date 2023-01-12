@@ -1,10 +1,9 @@
  <?php
 
-    session_start();
-    
     require '../../config/connect.php';
     require '../../config/query/fetchHotel.php';
-    require '../php/classes/Utils.php';
+    require '../php/classes/Utils.class.php';
+    session_start();
 
     if($_SESSION['isLoggedIn'] === false) {
         header('Location: /hotel-booking-app/src/views/sign_in.view.php');
