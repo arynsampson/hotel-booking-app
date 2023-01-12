@@ -15,6 +15,14 @@ include_once 'DB.class.php';
             $this->email = $email;
         }
 
+        public function getID() {
+            return $this->id;
+        }
+
+        public function setID($id) {
+            $this->id = $id;
+        }
+
         public function getFirstName() {
             return $this->firstname;
         }
@@ -27,11 +35,11 @@ include_once 'DB.class.php';
             return $this->email;
         }
 
-        public function setFirstname($firstname) {
+        public function setFirstName($firstname) {
             $this->firstname = $firstname;
         }
 
-        public function setLastname($lastname) {
+        public function setLastName($lastname) {
             $this->lastname = $lastname;
         }
 
