@@ -1,18 +1,16 @@
 <?php
 
-    function fetchUser($id) {
+    function fetchUser($email) {
         global $conn;
-        $sql = "SELECT id, firstname, lastname, email FROM user WHERE user.id = '$id'";
+        $sql = "SELECT id, firstname, lastname, email FROM user WHERE user.email = '$email'";
         
         $result = $conn->query($sql);
 
         if($result->num_rows > 0) {
             $user = $result->fetch_assoc();
-
-            $_SESSION['loggedInUser'] = [];
-            $_SESSION['loggedInUser'] = $user;
-            $_SESSION['fullname'] = $user['firstname'] . ' ' . $user['lastname'];
+            return $user;
         }
+        return;
     }
 
 ?>
