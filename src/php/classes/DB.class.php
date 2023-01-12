@@ -1,7 +1,5 @@
 <?php
 
-    require '../../../config/connection_details.php';
-
     class DB {
         private $server = 'localhost';
         private $username = 'admin';
