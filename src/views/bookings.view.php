@@ -68,6 +68,7 @@
             <?php endforeach;
             } ?>
         </table>
+        <!-- <p class="error"><?php echo $_SESSION['cancel_error'] ?? '' ?></p> -->
     </div>
 
     
