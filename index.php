@@ -5,8 +5,10 @@
     require './src/php/classes/User.class.php';
 
     session_start();
+    
     $_SESSION['hotel'] = [];
 
+    $hotels = fetchHotels();
     if(!isset($_SESSION['isLoggedIn'])) {
         $_SESSION['isLoggedIn'] = false;
     }
