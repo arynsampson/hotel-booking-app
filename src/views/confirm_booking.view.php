@@ -86,6 +86,8 @@
                 <h4>Hotel details:</h4>
                 <div class="booking-info">
                     <p>Hotel name: <?php echo $booking_info['hotel_name']; ?></p>
+                    <p>Check-in: <?php echo $_SESSION['booking-information']['check-in']; ?></p>
+                    <p>Check-out: <?php echo $_SESSION['booking-information']['check-out']; ?></p>
                     <p>Amount of nights: <?php echo $booking_info['num_nights']; ?></p>
                     <p>Price per night: R<?php echo $booking_info['daily_rate']; ?></p>
                     <p>Total cost: R<?php echo $booking_info['total_cost']; ?></p>
