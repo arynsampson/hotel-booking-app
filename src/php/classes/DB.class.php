@@ -14,4 +14,13 @@
         public function getConn() {
             return $this->conn;
         }
+
+        // fetch user
+
+        // fetch hotel
+
+        // create booking
+
+        // cancel booking
+
     }

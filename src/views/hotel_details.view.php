@@ -15,7 +15,7 @@
         $utils = new Utils;
         $hotel_dates = $utils->validateDates($_POST['check-in'], $_POST['check-out']);
 
-        if(empty($hotel_dates[1][0])) {
+        if($hotel_dates[1][0] === '' && $hotel_dates[1][1] === '' && $hotel_dates[1][2] === '') {
             $_SESSION['booking-information'] = $_POST;
             header('Location: /hotel-booking-app/src/views/confirm_booking.view.php');
         }

@@ -1,33 +1,11 @@
 <?php
+
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/paths.php';
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/connect.php';
     session_start();
-    require '../../config/connect.php';
-    require '../../config/query/fetchUser.php';
-    require '../php/classes/Utils.php';
 
-    if(isset($_POST['update'])) {
-        $utils = new Utils;
-        // validate user input
-        $firstname = $utils->validate_firstname($_POST['firstname_update']);
-        $lastname = $utils->validate_lastname($_POST['lastname_update']);
-        $email = $utils->validate_email($_POST['email_update']);
-
-        // TEST NAME & EMAIL VALIDATIONS
-
-        // update user object
-
-
-        // update database
-        global $conn;
-        $sql = "UPDATE user SET firstname='".$firstname['name']."', lastname='".$lastname['name']."', email='".$email['email']."' WHERE user.id='".$_SESSION['loggedInUser']['id']."'";
-        $result = $conn->query($sql);
-
-        // update session variable
-        fetchUser($_SESSION['loggedInUser']['id']);
-
-        header('Location: /hotel-booking-app/src/views/user_profile.view.php');
-    }
-
-
+    $user = unserialize($_SESSION['user']);
 ?>
 
 <!DOCTYPE html>
@@ -47,20 +25,20 @@
 
     <div class="main-container">
         <div class="update-info-form-wrapper">
-            <form action="user_profile.view.php" method="POST">
+            <form action="<?php echo '../php/user_handling/user_profile_handler.php'; ?>" method="POST">
                 <div>
                     <label for="firstname">Edit name:</label>
-                    <input type="text" name="firstname_update" value="<?php echo $_SESSION['loggedInUser']['firstname']; ?>">
+                    <input type="text" name="firstname_update" value="<?php echo $user->getFirstName(); ?>">
                     <p class="error"><?php echo $firstname['error'] ?? ''; ?></p>
                 </div>
                 <div>
                     <label for="lastname">Edit lastname:</label>
-                    <input type="text" name="lastname_update" value="<?php echo $_SESSION['loggedInUser']['lastname']; ?>">
+                    <input type="text" name="lastname_update" value="<?php echo $user->getLastName(); ?>">
                     <p class="error"><?php echo $lastname['error'] ?? ''; ?></p>
                 </div>
                 <div>
                     <label for="lastname">Edit email:</label>
-                    <input type="text" name="email_update" value="<?php echo $_SESSION['loggedInUser']['email']; ?>">
+                    <input type="text" name="email_update" value="<?php echo $user->getEmail(); ?>">
                     <p class="error"><?php echo $email['error'] ?? ''; ?></p>
                 </div>
                 

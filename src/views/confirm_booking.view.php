@@ -1,17 +1,21 @@
 <?php
 
-    require '../php/classes/Booking.class.php';
-    require '../../config/connect.php';
-    require '../php/classes/Utils.php';
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/connect.php';
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Booking.class.php';
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Utils.class.php';
     session_start(); 
 
     $utils = new Utils;
+    $user = unserialize($_SESSION['user']);
 
     $num_nights = $utils->dateDifference($_SESSION['booking-information']['check-in'], $_SESSION['booking-information']['check-out']);
     $totalStayCost = $utils->totalStayCost($num_nights, $_SESSION['hotel']['daily_rate']);
 
     $booking_info = array(
         "hotel_name" => $_SESSION['hotel']['name'],
+        "check-in" => $_SESSION['booking-information']['check-in'],
+        "check-out" => $_SESSION['booking-information']['check-out'],
         "num_nights" => $num_nights,
         "daily_rate" => $_SESSION['hotel']['daily_rate'],
         "total_cost" => $totalStayCost
@@ -20,8 +24,8 @@
     if(isset($_POST['confirm-booking'])) {
 
         $booking = new Booking(
-            $_SESSION['fullname'],
-            $_SESSION['loggedInUser']['email'],
+            $user->getFullName(),
+            $user->getEmail(),
             $booking_info['hotel_name'],
             $booking_info['total_cost'],
             $_SESSION['booking-information']['check-in'],
@@ -32,8 +36,8 @@
         global $conn;
 
         $sql = "INSERT INTO booking (user_id, username, hotel_id, hotel_name, check_in_date, check_out_date, total, status) VALUES (
-            '".$_SESSION['loggedInUser']['id']."',
-            '".$_SESSION['fullname']."',
+            '".$user->getID()."',
+            '".$user->getEmail()."',
             '".$_SESSION['hotel']['id']."',
             '".$_SESSION['hotel']['name']."',
             '".$_SESSION['booking-information']['check-in']."',
@@ -72,9 +76,9 @@
             <div class="user-info-wrapper">
                 <h4>Customer details:</h4>
                 <div class="user-info">
-                    <p>Customer: <?php echo $_SESSION['fullname']; ?></p>
-                    <p>Email: <?php echo $_SESSION['loggedInUser']['email']; ?></p>
-                    <p>Customer ID: <?php echo $_SESSION['loggedInUser']['id']; ?></p>
+                    <p>Customer: <?php echo $user->getFullName(); ?></p>
+                    <p>Email: <?php echo $user->getEmail(); ?></p>
+                    <p>Customer ID: <?php echo $user->getID();; ?></p>
                 </div>
             </div>
 

@@ -28,12 +28,15 @@
                 if(date("Y-m-d") > $date1) {
                     $hotel_dates[1][1] = 'Check-in date cannot be before today.';
                 } else {
+                    $hotel_dates[1][1] = '';
                     if($date1 > $date2) {
                         $hotel_dates[1][2] = 'Check-out date should be after check-in date.';
                     } else {
+                        $hotel_dates[1][2] = '';
                         if(!$hotel_dates[1]) {
                             $hotel_dates[0]['check-in'] = $date1;
                             $hotel_dates[0]['check-out'] = $date2;
+
                         }
                     }
                 }

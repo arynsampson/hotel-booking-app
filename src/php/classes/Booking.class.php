@@ -3,13 +3,16 @@
     class Booking {
         // user name, user email, user id, hotel name & id, total cost, dates, booking status
 
+        //private $userID;
         private $username;
         private $email;
+        // private $hotelID;
         private $hotel_name;
         private $total_cost;
         private $check_in;
         private $check_out;
-        public $booking_status;
+        // private $num_nights;
+        public $booking_status = false;
 
         function __construct(
                 $username, 
@@ -26,7 +29,7 @@
             $this->total_cost = $total_cost;
             $this->check_in = $check_in;
             $this->check_out = $check_out;
-            $this->booking_status = $booking_status;
+            $booking_status;
         }
 
         public function getBookingStatus() {

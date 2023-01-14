@@ -1,7 +1,5 @@
 <?php
 
-include_once 'DB.class.php';
-
     class User {
         private $id;
         private $firstname;
@@ -29,6 +27,10 @@ include_once 'DB.class.php';
 
         public function getLastName() {
             return $this->lastname;
+        }
+
+        public function getFullName() {
+            return $this->firstname . ' ' . $this->lastname;
         }
 
         public function getEmail() {

@@ -1,39 +1,36 @@
 <?php
 
-    require '../../config/connect.php';
-
+    require '../../../config/connect.php';
+    require '../../../config/query/fetchUser.php';
+    require '../classes/User.class.php';
+    require '../classes/Utils.class.php';
+    require '../classes/Auth.class.php';
+    require '../../../config/paths.php';
     session_start();
 
-    function signUserIn($user) {
+    if(isset($_POST['submit'])) {
+        $utils = new Utils;
+        $user_input_data = array(
+        'email' => $utils->validate_email($_POST['email']),
+        'password' => $utils->validate_password($_POST['password'])
+    );
 
-        session_unset();
-        global $conn;
+        $doesUserExist = $utils->checkUserExists($user_input_data['email']);
 
-        $firstname = $lastname = '';
-        $email = $user['email'];
-        $password = $user['password'];
+        if($doesUserExist) {
+            
+            $user = fetchUser($user_input_data['email']);
 
-        $sql = "SELECT id, firstname, lastname, email FROM user WHERE user.email = '".$email['email']."'";
-        
-        $result = $conn->query($sql);
+            $new_user = new User($user['id'], $user['firstname'], $user['lastname'], $user['email']);
 
-        if($result->num_rows > 0) {
-            // register new user
-            $user = $result->fetch_assoc();
-
-            $_SESSION['loggedInUser'] = $user;
-            $_SESSION['fullname'] = $user['firstname'] . ' ' . $user['lastname'];
-
+            $_SESSION['user'] = serialize($new_user);
             $_SESSION['isLoggedIn'] = true;
             $_SESSION['bookings'] = [];
 
-            mysqli_free_result($result);
-            header('Location: ../../index.php');
+            header('Location: ../../../../hotel-booking-app');
         } else {
             // already existing user
             $_SESSION['error'] = 'Account not found.';
 
         }
-        
     }
-

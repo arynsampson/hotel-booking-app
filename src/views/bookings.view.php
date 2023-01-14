@@ -1,9 +1,14 @@
 <?php
 
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/paths.php';
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/connect.php';
     session_start();
-    require '../../config/connect.php';
+
+    $user = unserialize($_SESSION['user']);
+    $user_id = $user->getID();
     
-    $sql = "SELECT * FROM booking WHERE booking.user_id='".$_SESSION['loggedInUser']['id']."'";
+    $sql = "SELECT * FROM booking WHERE booking.user_id='$user_id'";
         
     $result = $conn->query($sql);
 
@@ -50,6 +55,10 @@
                     <td><?php echo $booking[6] ?></td>
                     <td><?php echo $booking[9] ?></td>
                     <td><?php echo $booking[8] ?></td>
+                    <td>
+                        <form action="<?php echo '../php/booking_handling/receipt.php/?id='.$booking[0]; ?>" method="POST">
+                            <input type="submit" value="Receipt" name="receipt">
+                        </form></td>
                     <td>
                         <form action="<?php echo '../php/booking_handling/cancel.php/?id='.$booking[0]; ?>" method="POST">
                             <input type="submit" value="Cancel" name="cancel">
