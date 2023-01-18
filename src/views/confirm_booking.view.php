@@ -112,6 +112,7 @@
                 <p>Name: <span id="hotel-name"></span></p>
                 <p>Daily rate: R<span id="daily_rate"></span></p>
                 <p>Rating: <span id="rating"></span></p>
+                <a href="" id="hotel_link">Book</a>
                 <img src="" alt="" id="thumnbail" width="400" height="400">
             </div>
 
@@ -135,6 +136,8 @@
                     document.getElementById("daily_rate").innerHTML = hotel.daily_rate;
                     document.getElementById("rating").innerHTML = hotel.rating;
                     document.getElementById("thumnbail").src = hotel.thumbnail;
+                    document.getElementById("hotel_link").href = "hotel_details.view.php/?id=" + hotel.id;
+                    
                 }
             };
             xmlhttp.open("GET","../../config/update.php?id="+num);
