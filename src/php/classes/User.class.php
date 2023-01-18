@@ -17,10 +17,6 @@
             return $this->id;
         }
 
-        public function setID($id) {
-            $this->id = $id;
-        }
-
         public function getFirstName() {
             return $this->firstname;
         }
@@ -35,6 +31,10 @@
 
         public function getEmail() {
             return $this->email;
+        }
+
+        public function setID($id) {
+            $this->id = $id;
         }
 
         public function setFirstName($firstname) {

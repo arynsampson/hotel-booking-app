@@ -1,11 +1,12 @@
 <?php
 
-    require './connect.php';
+    require '../src/ph/classes/DB.class.php';
 
     $hotelID = $_GET['id'];
+    $db = new DB;
 
     $sql = "SELECT * from hotel WHERE id=$hotelID";
-    $result = $conn->query($sql);
+    $result = $db->conn->query($sql);
     $hotel = $result->fetch_assoc();
 
     echo json_encode($hotel);

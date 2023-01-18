@@ -2,15 +2,16 @@
 
     require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/paths.php';
     require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/connect.php';
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
     session_start();
 
     $user = unserialize($_SESSION['user']);
     $user_id = $user->getID();
     
     $sql = "SELECT * FROM booking WHERE booking.user_id='$user_id'";
+    $db = new DB;
         
-    $result = $conn->query($sql);
+    $result = $db->conn->query($sql);
 
     if($result->num_rows > 0) {
         $bookings = $result->fetch_all();

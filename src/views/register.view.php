@@ -1,3 +1,9 @@
+<?php
+
+  // FIX ERROR MESSAGES NOT DISPLAYING
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +32,7 @@
                     <div class="input-field col s12">
                       <label for="first_name">First name:</label>
                       <input id="first_name" type="text" class="validate" name="firstname" required>
+                      <p><?php echo $user_input_data['firstname']['error'] ?? '' ?></p>
                     </div>
                     <div class="input-field col s12">
                       <input id="last_name" type="text" class="validate" name="lastname" required>

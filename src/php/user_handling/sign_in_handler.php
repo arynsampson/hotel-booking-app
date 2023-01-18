@@ -1,11 +1,8 @@
 <?php
 
-    require '../../../config/connect.php';
-    require '../../../config/query/fetchUser.php';
+    require '../classes/DB.class.php';
     require '../classes/User.class.php';
     require '../classes/Utils.class.php';
-    require '../classes/Auth.class.php';
-    require '../../../config/paths.php';
     session_start();
 
     if(isset($_POST['submit'])) {
@@ -19,7 +16,8 @@
 
         if($doesUserExist) {
             
-            $user = fetchUser($user_input_data['email']);
+            $db = new DB;
+            $user = $db->fetchUser($user_input_data['email']);
 
             $new_user = new User($user['id'], $user['firstname'], $user['lastname'], $user['email']);
 

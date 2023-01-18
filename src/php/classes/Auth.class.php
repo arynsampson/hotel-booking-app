@@ -1,18 +1,17 @@
 <?php
 
-include_once 'DB.class.php';
+    include_once 'DB.class.php';
 
     class Auth extends DB {
 
         public function register($user) {
             $db = new DB;
-            $conn = $db->getConn();
             $sql = "INSERT INTO user (firstname, lastname, email, password) VALUES (
                 '".$user['firstname']."', 
                 '".$user['lastname']."', 
                 '".$user['email']."', 
                 '".$user['password']."');";
-            $insert_user_into_db = $conn->query($sql);
+            $insert_user_into_db = $db->conn->query($sql);
         }
 
         public function login() {

@@ -1,7 +1,6 @@
 <?php
 
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/connect.php';
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/query/fetchHotels.php';
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
     require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
     require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Booking.class.php';
     require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Utils.class.php';
@@ -22,6 +21,8 @@
         "total_cost" => $totalStayCost
     );
 
+    $db = new DB;
+
     if(isset($_POST['confirm-booking'])) {
         $booking = new Booking(
             $user->getFullName(),
@@ -32,7 +33,7 @@
             $_SESSION['booking-information']['check-out'],
             false
         );
-        global $conn;
+        
         $sql = "INSERT INTO booking (user_id, username, hotel_id, hotel_name, check_in_date, check_out_date, total, status) VALUES (
             '".$user->getID()."',
             '".$user->getEmail()."',
@@ -43,11 +44,12 @@
             '".$booking_info['total_cost']."',
             'CONFIRMED'
         )";
-        $result = $conn->query($sql);
+
+        $result = $db->conn->query($sql);
         header('Location: /hotel-booking-app');
     }
 
-    $hotels = fetchHotels();
+    $hotels = $db->fetchHotels();
 
     foreach($hotels as $hotel) {
         if($hotel['id'] === $_SESSION['hotel']['id']) {

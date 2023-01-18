@@ -61,7 +61,7 @@
         public function validate_password($password) {
             if(strlen($password) < 5) {
                 return array(
-                    'email' => '', 
+                    'password' => '', 
                     'error' => 'Cannot be less than 5 characters.'
                 );
             } else {
@@ -102,10 +102,9 @@
         // check if user exists in db
         public function checkUserExists($email) {
             $db = new DB;
-            $conn = $db->getConn();
 
             $sql = "SELECT * FROM user WHERE user.email = '$email'";
-            $result = $conn->query($sql);
+            $result = $db->conn->query($sql);
 
             if($result->num_rows < 1) {
                 return false;

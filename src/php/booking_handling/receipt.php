@@ -2,18 +2,16 @@
 
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/query/fetchBooking.php';
     session_start();
     $db = new DB;
 
     $user = unserialize($_SESSION['user']);
-    $conn = $db->getConn();
 
     // get booking ID
     $bookingID = $_GET['id'];
 
     // get booking info
-    $bookingInfo = fetchBooking($bookingID);
+    $bookingInfo = $db->fetchBooking($bookingID);
     
     // create booking array
     $bookingReceipt = array (

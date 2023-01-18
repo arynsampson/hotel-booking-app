@@ -1,14 +1,14 @@
 <?php
 
-    require './config/connect.php';
-    require './config/query/fetchHotels.php';
+    require './src/php/classes/DB.class.php';
     require './src/php/classes/User.class.php';
 
     session_start();
     
     $_SESSION['hotel'] = [];
+    $db = new DB;
 
-    $hotels = fetchHotels();
+    $hotels = $db->fetchHotels();
     if(!isset($_SESSION['isLoggedIn'])) {
         $_SESSION['isLoggedIn'] = false;
     }

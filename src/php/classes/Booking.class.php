@@ -39,4 +39,8 @@
         public function setBookingStatus($booking_status) {
             $this->booking_status = $booking_status;
         }
+
+        public function downloadReceipt() {
+            
+        }
     }

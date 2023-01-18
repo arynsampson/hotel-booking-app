@@ -1,8 +1,6 @@
 <?php
 
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/paths.php';
     require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/connect.php';
     session_start();
 
     $user = unserialize($_SESSION['user']);

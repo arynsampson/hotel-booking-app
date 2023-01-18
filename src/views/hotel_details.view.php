@@ -1,7 +1,6 @@
  <?php
 
-    require '../../config/connect.php';
-    require '../../config/query/fetchHotel.php';
+    require '../php/classes/DB.class.php';
     require '../php/classes/Utils.class.php';
     session_start();
 
@@ -9,7 +8,9 @@
         header('Location: /hotel-booking-app/src/views/sign_in.view.php');
     }
 
-    $hotel = fetchHotel($_GET['id']);
+    $db = new DB;
+
+    $hotel = $db->fetchHotel($_GET['id']);
         
     if(isset($_POST['booking-hotel'])) {
         $utils = new Utils;
