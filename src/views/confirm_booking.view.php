@@ -1,6 +1,7 @@
 <?php
 
     require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/connect.php';
+    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/query/fetchHotels.php';
     require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
     require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Booking.class.php';
     require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Utils.class.php';
@@ -22,7 +23,6 @@
     );
 
     if(isset($_POST['confirm-booking'])) {
-
         $booking = new Booking(
             $user->getFullName(),
             $user->getEmail(),
@@ -32,9 +32,7 @@
             $_SESSION['booking-information']['check-out'],
             false
         );
-
         global $conn;
-
         $sql = "INSERT INTO booking (user_id, username, hotel_id, hotel_name, check_in_date, check_out_date, total, status) VALUES (
             '".$user->getID()."',
             '".$user->getEmail()."',
@@ -45,10 +43,17 @@
             '".$booking_info['total_cost']."',
             'CONFIRMED'
         )";
-
         $result = $conn->query($sql);
-        
         header('Location: /hotel-booking-app');
+    }
+
+    $hotels = fetchHotels();
+
+    foreach($hotels as $hotel) {
+        if($hotel['id'] === $_SESSION['hotel']['id']) {
+                $indx = $_SESSION['hotel']['id'] - 1;
+                array_splice($hotels, $indx, 1);
+        }
     }
 
 ?>
@@ -86,12 +91,28 @@
                 <h4>Hotel details:</h4>
                 <div class="booking-info">
                     <p>Hotel name: <?php echo $booking_info['hotel_name']; ?></p>
+                    <p>Rating: <?php echo $_SESSION['hotel']['rating']; ?></p>
                     <p>Check-in: <?php echo $_SESSION['booking-information']['check-in']; ?></p>
                     <p>Check-out: <?php echo $_SESSION['booking-information']['check-out']; ?></p>
                     <p>Amount of nights: <?php echo $booking_info['num_nights']; ?></p>
                     <p>Price per night: R<?php echo $booking_info['daily_rate']; ?></p>
                     <p>Total cost: R<?php echo $booking_info['total_cost']; ?></p>
                 </div>
+            </div>
+
+            <div class="compare-hotel-wrapper">
+                <form>
+                    <select name="hotels" id="hotels-select" onchange="showHotel(this.value)">
+                        <option value="">Choose an alternative hotel</option>
+                        <?php foreach($hotels as $hotel): ?>
+                            <option value="<?php echo $hotel['id'] ?>"><?php echo $hotel['name'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </form>
+                <p>Name: <span id="hotel-name"></span></p>
+                <p>Daily rate: R<span id="daily_rate"></span></p>
+                <p>Rating: <span id="rating"></span></p>
+                <img src="" alt="" id="thumnbail" width="400" height="400">
             </div>
 
             <div class="confirm-booking-form">
@@ -103,6 +124,23 @@
         </div>
         
     </div>
+
+    <script>
+       function showHotel(num) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let hotel = JSON.parse(this.responseText);
+                    document.getElementById("hotel-name").innerHTML = hotel.name;
+                    document.getElementById("daily_rate").innerHTML = hotel.daily_rate;
+                    document.getElementById("rating").innerHTML = hotel.rating;
+                    document.getElementById("thumnbail").src = hotel.thumbnail;
+                }
+            };
+            xmlhttp.open("GET","../../config/update.php?id="+num);
+            xmlhttp.send();
+        }
+    </script>
     
 </body>
 </html>

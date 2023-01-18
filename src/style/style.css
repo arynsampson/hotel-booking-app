@@ -164,13 +164,13 @@ ul {
 /* BOOKING CONFIRMATION PAGE */
 
 .confirm-info-wrapper {
-    display: flex;
-    /* flex-direction: row; */
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     gap: 10px;
 }
 
-.user-info-wrapper, .booking-info-wrapper {
+.user-info-wrapper, .booking-info-wrapper, .compare-hotel-wrapper {
     width: 100%;
     padding: 15px;
     border: 1px solid black;
@@ -180,10 +180,14 @@ ul {
     margin: 0 0 15px 0;
 }
 
+.booking-info-wrapper {
+    grid-row: 2 / 3;
+}
+
 .confirm-booking-form {
     width: 100%;
     margin: 0 auto;
-    text-align: right;
+    grid-row: 3 / 4;
 }
 
 .confirm-booking-form form input {
@@ -191,7 +195,16 @@ ul {
     padding: 6px 0;
 }
 
+.compare-hotel-wrapper {
+    grid-column: 2 / 3;
+    grid-row: 1 / -1;
+}
+
 .error {
     color: red;
     margin: 2px 0;
+}
+
+select, option {
+    display: block;
 }
