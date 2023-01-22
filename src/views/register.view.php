@@ -1,7 +1,5 @@
 <?php
-
-  // FIX ERROR MESSAGES NOT DISPLAYING
-
+  session_start();
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +16,7 @@
 </head>
 <body>
 
-    <?php session_start(); require '../templates/header.template.php'; ?>
+    <?php require '../templates/header.template.php'; ?>
 
     <div class="bg-image">
       <h1>Create account</h1>
@@ -27,7 +25,7 @@
           <div class="row">
             <div class="col s12 center-align">
               <div class="row">
-                <form action="<?php echo '../php/user_handling/register_handler.php'; ?>" method="POST" class="col s12">
+                <form action="<?php echo '../php/handling/user_handling/AuthHandler.php/?action=Register'; ?>" method="POST" class="col s12">
                   <div class="row">
                     <div class="input-field col s12">
                       <label for="first_name">First name:</label>
@@ -53,6 +51,7 @@
                       <input id="submit" type="submit" class="btn" name="submit" value="Register">
                     </div>
                   </div>
+                  <p><?php echo $_SESSION['error'] ?? ''; ?></p>
                 </form>
               </div>
             </div>
