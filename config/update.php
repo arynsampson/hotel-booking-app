@@ -1,6 +1,6 @@
 <?php
 
-    require '../src/ph/classes/DB.class.php';
+    require '../src/php/classes/DB.class.php';
 
     $hotelID = $_GET['id'];
     $db = new DB;
