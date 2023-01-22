@@ -1,11 +1,11 @@
  <?php
 
-    require '../php/classes/DB.class.php';
-    require '../php/classes/Utils.class.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Utils.class.php';
     session_start();
 
     if($_SESSION['isLoggedIn'] === false) {
-        header('Location: /hotel-booking-app/src/views/sign_in.view.php');
+        header('Location: /hotel-booking-app/src/views/login.view.php');
     }
 
     $db = new DB;
@@ -18,7 +18,7 @@
 
         if($hotel_dates[1][0] === '' && $hotel_dates[1][1] === '' && $hotel_dates[1][2] === '') {
             $_SESSION['booking-information'] = $_POST;
-            header('Location: /hotel-booking-app/src/views/confirm_booking.view.php');
+            header('Location: /hotel-booking-app/src/views/confirmBooking.view.php');
         }
     } 
 
@@ -62,7 +62,7 @@
             </div>
 
             <div class="hotel-dates">
-                <form action="<?php echo '/hotel-booking-app/src/views/hotel_details.view.php/?id='.$_GET['id']; ?>" method="POST" class="dates-form">
+                <form action="<?php echo '/hotel-booking-app/src/views/hotelDetails.view.php/?id='.$_GET['id']; ?>" method="POST" class="dates-form">
                     <div class="check-in-wrapper">
                         <label for="check-in">Check-in date:</label>
                         <input type="date" name="check-in" value="<?php echo $_POST['check-in'] ?? ''; ?>">

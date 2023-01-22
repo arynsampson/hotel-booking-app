@@ -21,7 +21,7 @@
           <div class="row">
             <div class="col s12 center-align">
               <div class="row">
-                <form action="<?php echo '../php/user_handling/sign_in_handler.php'; ?>" method="POST" class="col s12">
+                <form action="<?php echo '../php/handling/user_handling/AuthHandler.php/?action=Login'; ?>" method="POST" class="col s12">
                   <div class="row">
                     <div class="input-field col s12">
                       <input id="email" type="email" class="validate" name="email" required>

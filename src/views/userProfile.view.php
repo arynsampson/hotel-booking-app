@@ -1,6 +1,6 @@
 <?php
 
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
     session_start();
 
     $user = unserialize($_SESSION['user']);
@@ -23,7 +23,7 @@
 
     <div class="main-container">
         <div class="update-info-form-wrapper">
-            <form action="<?php echo '../php/user_handling/user_profile_handler.php'; ?>" method="POST">
+            <form action="<?php echo '../php/handling/user_handling/UserProfileHandler.php'; ?>" method="POST">
                 <div>
                     <label for="firstname">Edit name:</label>
                     <input type="text" name="firstname_update" value="<?php echo $user->getFirstName(); ?>">

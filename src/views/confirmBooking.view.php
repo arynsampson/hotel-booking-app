@@ -119,7 +119,7 @@
             </div>
 
             <div class="confirm-booking-form">
-                <form action="confirm_booking.view.php" method="POST">
+                <form action="confirmBooking.view.php" method="POST">
                     <input type="submit" value="Book" name="confirm-booking">
                 </form>
             </div>
@@ -138,7 +138,7 @@
                     document.getElementById("daily_rate").innerHTML = hotel.daily_rate;
                     document.getElementById("rating").innerHTML = hotel.rating;
                     document.getElementById("thumnbail").src = hotel.thumbnail;
-                    document.getElementById("hotel_link").href = "hotel_details.view.php/?id=" + hotel.id;
+                    document.getElementById("hotel_link").href = "hotelDetails.view.php/?id=" + hotel.id;
                     
                 }
             };
