@@ -1,16 +1,16 @@
 <?php
 
-    require './src/php/classes/DB.class.php';
-    require './src/php/classes/User.class.php';
+    require_once './src/php/classes/DB.class.php';
+    require_once './src/php/classes/User.class.php';
 
-    session_start();
-    
-    $_SESSION['hotel'] = [];
+    session_start();    
     $db = new DB;
 
     $hotels = $db->fetchHotels();
+
     if(!isset($_SESSION['isLoggedIn'])) {
         $_SESSION['isLoggedIn'] = false;
+        $_SESSION['hotel'] = [];
     }
 
 ?>
@@ -37,7 +37,7 @@
                     <div class="img-wrapper">
                         <img src="<?php echo $hotel['thumbnail'] ?>" alt="<?php echo $hotel['name'] ?>" class="hotel-img">
                     </div>
-                    <a href="<?php echo './src/views/hotel_details.view.php/?id='.$hotel['id']; ?>"><h4 class="hotel-name"><?php echo $hotel['name']; ?></h4></a>
+                    <a href="<?php echo './src/views/hotelDetails.view.php/?id='.$hotel['id']; ?>"><h4 class="hotel-name"><?php echo $hotel['name']; ?></h4></a>
                 </div> 
             <?php endforeach; ?>
         </div>

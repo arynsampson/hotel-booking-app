@@ -16,7 +16,7 @@
         }
 
         // fetch user
-        function fetchUser($email) {
+        public function fetchUser($email) {
             $sql = "SELECT id, firstname, lastname, email FROM user WHERE user.email = '$email'";
             
             $result = $this->conn->query($sql);
@@ -29,7 +29,7 @@
         }
 
         // fetch hotel
-        function fetchHotel($id) {
+        public function fetchHotel($id) {
             $sql = "SELECT * FROM hotel where id='$id';";
             $result = $this->conn->query($sql);
             $hotel = $result->fetch_assoc();
@@ -49,7 +49,7 @@
         }
 
         // fetch all hotels
-        function fetchHotels() {
+        public function fetchHotels() {
             $sql = "SELECT * FROM hotel;";
             $result = $this->conn->query($sql);
             $hotels = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -58,14 +58,16 @@
         }
 
         // create booking
+        public function createBooking() {
 
+        }
         // cancel booking
-        function cancelBooking() {
+        public function cancelBooking() {
 
         }
 
         // fetch booking
-        function fetchBooking($id) {
+        public function fetchBooking($id) {
             $sql = "SELECT * FROM booking where id='$id';";
             $result = $this->conn->query($sql);
             $booking = $result->fetch_assoc();

@@ -1,8 +1,8 @@
 <?php
 
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/paths.php';
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/paths.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
     session_start();
 
     $user = unserialize($_SESSION['user']);
@@ -57,11 +57,11 @@
                     <td><?php echo $booking[9] ?></td>
                     <td><?php echo $booking[8] ?></td>
                     <td>
-                        <form action="<?php echo '../php/booking_handling/receipt.php/?id='.$booking[0]; ?>" method="POST">
+                        <form action="<?php echo '../php/handling/booking_handling/receipt.php/?id='.$booking[0]; ?>" method="POST">
                             <input type="submit" value="Receipt" name="receipt">
                         </form></td>
                     <td>
-                        <form action="<?php echo '../php/booking_handling/cancel.php/?id='.$booking[0]; ?>" method="POST">
+                        <form action="<?php echo '../php/handling/booking_handling/cancel.php/?id='.$booking[0]; ?>" method="POST">
                             <input type="submit" value="Cancel" name="cancel">
                         </form>
                     </td>

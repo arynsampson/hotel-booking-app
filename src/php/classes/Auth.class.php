@@ -1,10 +1,10 @@
 <?php
 
-    include_once 'DB.class.php';
+    require_once 'DB.class.php';
 
     class Auth extends DB {
 
-        public function register($user) {
+        public function addUserToDB($user) {
             $db = new DB;
             $sql = "INSERT INTO user (firstname, lastname, email, password) VALUES (
                 '".$user['firstname']."', 
@@ -14,16 +14,8 @@
             $insert_user_into_db = $db->conn->query($sql);
         }
 
-        public function login() {
-            
-        }
+        public function fetchLoginUser() {
 
-        public function logout() {
-            session_unset();
-            session_destroy();
-            session_start();
-            $_SESSION['isLoggedIn'] = false;
-            header('Location: ../../../index.php');
         }
 
     }

@@ -1,6 +1,6 @@
 <?php
 
-    include_once 'DB.class.php';
+    require_once 'DB.class.php';
 
     class Utils extends DB {
         
