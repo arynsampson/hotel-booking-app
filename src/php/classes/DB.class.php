@@ -75,4 +75,14 @@
             return $booking;
         }
 
+        // fetch all bookings
+        public function fetchAllBookings($userID) {
+            $sql = "SELECT * FROM booking WHERE booking.user_id='$userID'";
+            $result = $this->conn->query($sql);
+            if($result->num_rows > 0) {
+                $bookings = $result->fetch_all();
+                return $bookings;
+            }
+        }
+
     }
