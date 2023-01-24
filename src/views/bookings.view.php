@@ -44,12 +44,12 @@
                     <td><?php echo $booking[9] ?></td>
                     <td><?php echo $booking[8] ?></td>
                     <td>
-                        <form action="<?php echo '../php/handling/booking_handling/receipt.php/?id='.$booking[0]; ?>" method="POST">
+                        <form action="<?php echo '../php/handling/booking_handling/BookingHandler.php/?action=Receipt&id='.$booking[0]; ?>" method="POST">
                             <input type="submit" value="Receipt" name="receipt">
                         </form></td>
                     <td>
                         <?php if($booking[8] === "CONFIRMED"): ?>
-                            <form action="<?php echo '../php/handling/booking_handling/cancel.php/?id='.$booking[0]; ?>" method="POST">
+                            <form action="<?php echo '../php/handling/booking_handling/BookingHandler.php/?action=Cancel&id='.$booking[0]; ?>" method="POST">
                                 <input type="submit" value="Cancel" name="cancel">
                             </form>
                         <?php endif; ?>
