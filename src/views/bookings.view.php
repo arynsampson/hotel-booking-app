@@ -1,22 +1,10 @@
 <?php
 
-    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/config/paths.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
-    session_start();
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/user.php';
 
-    $user = unserialize($_SESSION['user']);
-    $user_id = $user->getID();
-    
-    $sql = "SELECT * FROM booking WHERE booking.user_id='$user_id'";
     $db = new DB;
-        
-    $result = $db->conn->query($sql);
-
-    if($result->num_rows > 0) {
-        $bookings = $result->fetch_all();
-        $_SESSION['bookings'] = $bookings;
-    }
+    $bookings = $db->fetchAllBookings($user->getID());
 
 ?>
 
@@ -47,8 +35,7 @@
                 <th>Receipt</th>
                 <th>Cancel</th>
             </tr>
-            <?php 
-                if($_SESSION['bookings']) { foreach($_SESSION['bookings'] as $booking): ?>
+            <?php foreach($bookings as $booking): ?>
                 <tr>
                     <td><?php echo $booking[0] ?></td>
                     <td><?php echo $booking[4] ?></td>
@@ -61,13 +48,14 @@
                             <input type="submit" value="Receipt" name="receipt">
                         </form></td>
                     <td>
-                        <form action="<?php echo '../php/handling/booking_handling/cancel.php/?id='.$booking[0]; ?>" method="POST">
-                            <input type="submit" value="Cancel" name="cancel">
-                        </form>
+                        <?php if($booking[8] === "CONFIRMED"): ?>
+                            <form action="<?php echo '../php/handling/booking_handling/cancel.php/?id='.$booking[0]; ?>" method="POST">
+                                <input type="submit" value="Cancel" name="cancel">
+                            </form>
+                        <?php endif; ?>
                     </td>
                 </tr>
-            <?php endforeach;
-            } ?>
+            <?php endforeach; ?>
         </table>
         <!-- <p class="error"><?php echo $_SESSION['cancel_error'] ?? '' ?></p> -->
     </div>
