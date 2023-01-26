@@ -11,9 +11,9 @@
         $db = new DB; $utils = new Utils;
         
         // validate user input
-        $firstname = $utils->validate_firstname($_POST['firstname_update']);
-        $lastname = $utils->validate_lastname($_POST['lastname_update']);
-        $email = $utils->validate_email($_POST['email_update']);
+        $firstname = $utils->validateFirstname($_POST['firstname_update']);
+        $lastname = $utils->validateLastname($_POST['lastname_update']);
+        $email = $utils->validateEmail($_POST['email_update']);
 
         // update user object
         $user->setFirstName($firstname);
