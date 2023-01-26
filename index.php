@@ -2,17 +2,36 @@
 
     require_once './src/php/classes/DB.class.php';
     require_once './src/php/classes/User.class.php';
+    require_once './src/php/classes/Hotel.class.php';
 
     session_start();    
     $db = new DB;
 
-    $hotels = $db->fetchHotels();
+    // initialise hotels variable in session
+    $_SESSION['hotels'] = [];
 
     if(!isset($_SESSION['isLoggedIn'])) {
         $_SESSION['isLoggedIn'] = false;
         $_SESSION['hotel'] = [];
+        
     }
 
+    // fetch all hotels from db
+    $hotels = $db->fetchHotels();
+    foreach($hotels as $hotel) {
+        // create new hotel object with each hotel
+        $hotel = new Hotel(
+            $hotel['id'],
+            $hotel['name'],
+            $hotel['daily_rate'],
+            $hotel['thumbnail'],
+            $hotel['features'],
+            $hotel['rating'],
+            $hotel['address']
+        );
+        // add hotel object to hotels session variable
+        array_push($_SESSION['hotels'], serialize($hotel));
+    }
 ?>
 
 <!DOCTYPE html>
