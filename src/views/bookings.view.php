@@ -1,10 +1,29 @@
 <?php
 
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Booking.class.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/user.php';
 
     $db = new DB;
-    $bookings = $db->fetchAllBookings($user->getID());
+    
+    $_SESSION['bookings'] = [];
+    $bookings = $db->fetchAllBookings($user->getID()) ?? [];
+    if($bookings) {
+        foreach($bookings as $booking) {
+            $booking = new Booking(
+                $user->getID(),
+                $user->getEmail(),
+                $booking[3],
+                $booking[4],
+                $booking[8],
+                $booking[5],
+                $booking[6],
+                $booking[7],
+                $booking[9]
+            );
+            array_push($_SESSION['bookings'], serialize($booking));
+        }
+    }
 
 ?>
 
@@ -41,15 +60,15 @@
                     <td><?php echo $booking[4] ?></td>
                     <td><?php echo $booking[5] ?></td>
                     <td><?php echo $booking[6] ?></td>
+                    <td><?php echo $booking[10] ?></td>
                     <td><?php echo $booking[9] ?></td>
-                    <td><?php echo $booking[8] ?></td>
                     <td>
-                        <form action="<?php echo '../php/handling/booking_handling/BookingHandler.php/?action=Receipt&id='.$booking[0]; ?>" method="POST">
+                        <form action="<?php echo '../php/handling/bookings/BookingHandler.php/?action=Receipt&id='.$booking[0]; ?>" method="POST">
                             <input type="submit" value="Receipt" name="receipt">
                         </form></td>
                     <td>
-                        <?php if($booking[8] === "CONFIRMED"): ?>
-                            <form action="<?php echo '../php/handling/booking_handling/BookingHandler.php/?action=Cancel&id='.$booking[0]; ?>" method="POST">
+                        <?php if($booking[9] === "CONFIRMED"): ?>
+                            <form action="<?php echo '../php/handling/bookings/BookingHandler.php/?action=Cancel&id='.$booking[0]; ?>" method="POST">
                                 <input type="submit" value="Cancel" name="cancel">
                             </form>
                         <?php endif; ?>
@@ -57,9 +76,10 @@
                 </tr>
             <?php endforeach; ?>
         </table>
-        <!-- <p class="error"><?php echo $_SESSION['cancel_error'] ?? '' ?></p> -->
+        <p><?php echo $_SESSION['cancel_message'] ?? ''; ?></p>
     </div>
 
+    <script src="../js/script.js"></script>
     
 </body>
 </html>
