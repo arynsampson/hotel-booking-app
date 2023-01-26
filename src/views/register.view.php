@@ -25,7 +25,7 @@
           <div class="row">
             <div class="col s12 center-align">
               <div class="row">
-                <form action="<?php echo '../php/handling/user_handling/AuthHandler.php/?action=Register'; ?>" method="POST" class="col s12">
+                <form action="<?php echo '../php/handling/auth/AuthHandler.php/?action=Register'; ?>" method="POST" class="col s12">
                   <div class="row">
                     <div class="input-field col s12">
                       <label for="first_name">First name:</label>

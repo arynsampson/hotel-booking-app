@@ -23,7 +23,7 @@
 
     <div class="main-container">
         <div class="update-info-form-wrapper">
-            <form action="<?php echo '../php/handling/user_handling/UserProfileHandler.php'; ?>" method="POST">
+            <form action="<?php echo '../php/handling/user/UserProfileHandler.php'; ?>" method="POST">
                 <div>
                     <label for="firstname">Edit name:</label>
                     <input type="text" name="firstname_update" value="<?php echo $user->getFirstName(); ?>">

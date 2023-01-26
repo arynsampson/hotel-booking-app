@@ -1,53 +1,9 @@
 <?php
 
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Booking.class.php';
-    require $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Utils.class.php';
-    session_start(); 
-
-    $utils = new Utils;
-    $user = unserialize($_SESSION['user']);
-
-    $num_nights = $utils->dateDifference($_SESSION['booking-information']['check-in'], $_SESSION['booking-information']['check-out']);
-    $totalStayCost = $utils->totalStayCost($num_nights, $_SESSION['hotel']['daily_rate']);
-
-    $booking_info = array(
-        "hotel_name" => $_SESSION['hotel']['name'],
-        "check-in" => $_SESSION['booking-information']['check-in'],
-        "check-out" => $_SESSION['booking-information']['check-out'],
-        "num_nights" => $num_nights,
-        "daily_rate" => $_SESSION['hotel']['daily_rate'],
-        "total_cost" => $totalStayCost
-    );
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/user.php';
 
     $db = new DB;
-
-    if(isset($_POST['confirm-booking'])) {
-        $booking = new Booking(
-            $user->getFullName(),
-            $user->getEmail(),
-            $booking_info['hotel_name'],
-            $booking_info['total_cost'],
-            $_SESSION['booking-information']['check-in'],
-            $_SESSION['booking-information']['check-out'],
-            false
-        );
-        
-        $sql = "INSERT INTO booking (user_id, username, hotel_id, hotel_name, check_in_date, check_out_date, total, status) VALUES (
-            '".$user->getID()."',
-            '".$user->getEmail()."',
-            '".$_SESSION['hotel']['id']."',
-            '".$_SESSION['hotel']['name']."',
-            '".$_SESSION['booking-information']['check-in']."',
-            '".$_SESSION['booking-information']['check-out']."',
-            '".$booking_info['total_cost']."',
-            'CONFIRMED'
-        )";
-
-        $result = $db->conn->query($sql);
-        header('Location: /hotel-booking-app');
-    }
 
     $hotels = $db->fetchHotels();
 
@@ -92,13 +48,13 @@
             <div class="booking-info-wrapper">
                 <h4>Hotel details:</h4>
                 <div class="booking-info">
-                    <p>Hotel name: <?php echo $booking_info['hotel_name']; ?></p>
+                    <p>Hotel name: <?php echo $_SESSION['booking-information']['name']; ?></p>
                     <p>Rating: <?php echo $_SESSION['hotel']['rating']; ?></p>
                     <p>Check-in: <?php echo $_SESSION['booking-information']['check-in']; ?></p>
                     <p>Check-out: <?php echo $_SESSION['booking-information']['check-out']; ?></p>
-                    <p>Amount of nights: <?php echo $booking_info['num_nights']; ?></p>
-                    <p>Price per night: R<?php echo $booking_info['daily_rate']; ?></p>
-                    <p>Total cost: R<?php echo $booking_info['total_cost']; ?></p>
+                    <p>Amount of nights: <?php echo $_SESSION['booking-information']['totalNights']; ?></p>
+                    <p>Price per night: R<?php echo $_SESSION['booking-information']['daily_rate']; ?></p>
+                    <p>Total cost: R<?php echo $_SESSION['booking-information']['totalStayCost']; ?></p>
                 </div>
             </div>
 
@@ -119,7 +75,7 @@
             </div>
 
             <div class="confirm-booking-form">
-                <form action="confirmBooking.view.php" method="POST">
+                <form action="<?php echo '../php/handling/bookings/BookingHandler.php/?action=Confirm&totalNights='.$_SESSION['booking-information']['totalNights'].'&totalStayCost='.$_SESSION['booking-information']['totalStayCost']; ?>" method="POST">
                     <input type="submit" value="Book" name="confirm-booking">
                 </form>
             </div>
@@ -128,24 +84,7 @@
         
     </div>
 
-    <script>
-       function showHotel(num) {
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    let hotel = JSON.parse(this.responseText);
-                    document.getElementById("hotel-name").innerHTML = hotel.name;
-                    document.getElementById("daily_rate").innerHTML = hotel.daily_rate;
-                    document.getElementById("rating").innerHTML = hotel.rating;
-                    document.getElementById("thumnbail").src = hotel.thumbnail;
-                    document.getElementById("hotel_link").href = "hotelDetails.view.php/?id=" + hotel.id;
-                    
-                }
-            };
-            xmlhttp.open("GET","../../config/update.php?id="+num);
-            xmlhttp.send();
-        }
-    </script>
+    <script src="../js/script.js"></script>
     
 </body>
 </html>
