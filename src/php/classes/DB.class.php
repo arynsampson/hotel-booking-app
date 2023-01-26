@@ -57,13 +57,23 @@
             return $hotels;
         }
 
-        // create booking
-        public function createBooking() {
-
-        }
-        // cancel booking
-        public function cancelBooking() {
-
+        // add booking to db
+        public function addBookingToDB($user, $booking) {
+            $user = unserialize($user);
+            $booking = unserialize($booking);
+            $sql = "INSERT INTO booking (user_id, email, hotel_id, hotel_name, check_in_date, check_out_date, totalNights, totalCost, status) VALUES (
+                '".$user->getID()."',
+                '".$user->getEmail()."',
+                '".$booking->getHotelID()."',
+                '".$booking->getHotelName()."',
+                '".$booking->getCheckIn()."',
+                '".$booking->getCheckOut()."',
+                '".$booking->getTotalNights()."',
+                '".$booking->getTotalCost()."',
+                'CONFIRMED'
+            )";
+            $this->conn->query($sql);
+            $this->endConn();
         }
 
         // fetch booking
