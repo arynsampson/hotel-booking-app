@@ -11,7 +11,7 @@
                 '".$user['lastname']."', 
                 '".$user['email']."', 
                 '".$user['password']."');";
-            $insert_user_into_db = $db->conn->query($sql);
+            $insertUserIntoDb = $db->conn->query($sql);
         }
 
         public function fetchLoginUser() {

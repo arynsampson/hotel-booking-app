@@ -2,45 +2,68 @@
 
     class Booking {
         // user name, user email, user id, hotel name & id, total cost, dates, booking status
-
-        //private $userID;
-        private $username;
+        private $userID;
         private $email;
-        // private $hotelID;
-        private $hotel_name;
-        private $total_cost;
-        private $check_in;
-        private $check_out;
-        // private $num_nights;
-        public $booking_status = false;
+        private $hotelID;
+        private $hotelName;
+        private $totalCost;
+        private $checkIn;
+        private $checkOut;
+        private $totalNights;
+        public $bookingStatus = false;
 
         function __construct(
-                $username, 
+                $userID,
                 $email, 
-                $hotel_name,
-                $total_cost, 
-                $check_in, 
-                $check_out, 
-                $booking_status
+                $hotelID,
+                $hotelName,
+                $checkIn, 
+                $checkOut,
+                $totalNights,
+                $totalCost, 
+                $bookingStatus
         ) {
-            $this->username = $username;
+            $this->userID = $userID;
             $this->email = $email;
-            $this->hotel_name = $hotel_name;
-            $this->total_cost = $total_cost;
-            $this->check_in = $check_in;
-            $this->check_out = $check_out;
-            $booking_status;
+            $this->hotelID = $hotelID;
+            $this->hotelName = $hotelName;
+            $this->checkIn = $checkIn;
+            $this->checkOut = $checkOut;
+            $this->totalNights = $totalNights;
+            $this->totalCost = $totalCost;
+            $bookingStatus;
         }
 
+        public function getUserID() {
+            return $this->userID;
+        }
+        public function getEmail() {
+            return $this->email;
+        }
+        public function getHotelID() {
+            return $this->hotelID;
+        }
+        public function getHotelName() {
+            return $this->hotelName;
+        }
+        public function getCheckIn() {
+            return $this->checkIn;
+        }
+        public function getCheckOut() {
+            return $this->checkOut;
+        }
+        public function getTotalNights() {
+            return $this->totalNights;
+        }
+        public function getTotalCost() {
+            return $this->totalCost;
+        }
         public function getBookingStatus() {
-            return $this->booking_status;
+            return $this->bookingStatus;
         }
         
-        public function setBookingStatus($booking_status) {
-            $this->booking_status = $booking_status;
+        public function setBookingStatus($bookingStatus) {
+            $this->bookingStatus = $bookingStatus;
         }
 
-        public function downloadReceipt() {
-            
-        }
     }

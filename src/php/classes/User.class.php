@@ -37,10 +37,6 @@
             return $this->email;
         }
 
-        public function setID($id) {
-            $this->id = $id;
-        }
-
         public function setFirstName($firstname) {
             $this->firstname = $firstname;
         }
