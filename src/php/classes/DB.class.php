@@ -1,11 +1,14 @@
 <?php
 
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/tables.php';
+
     class DB {
         private $server = 'localhost';
         private $username = 'admin';
         private $password = 'password1234';
         private $db = 'hotel';
         public $conn;
+        public $tablesCreated = false;
 
         public function __construct() {
             $this->conn = new mysqli($this->server, $this->username, $this->password, $this->db);
@@ -13,6 +16,19 @@
 
         public function endConn() {
             $this->conn->close();
+        }
+
+        // create tables
+        public function createTables() {
+            global $bookingTable; global $hotelTable; global $userTable;  
+            $this->conn->query($bookingTable);
+            $this->conn->query($userTable);
+            $this->conn->query($hotelTable);
+            $this->tablesCreated = true;
+        }
+
+        public function getTablesCreated() {
+            return $this->tablesCreated;
         }
 
         // fetch user
@@ -23,9 +39,9 @@
     
             if($result->num_rows > 0) {
                 $user = $result->fetch_assoc();
+ 
                 return $user;
             }
-            return;
         }
 
         // fetch hotel
@@ -33,9 +49,7 @@
             $sql = "SELECT * FROM hotel where id='$id';";
             $result = $this->conn->query($sql);
             $hotel = $result->fetch_assoc();
-    
-            $_SESSION['hotel'] = $hotel;
-    
+            $_SESSION['hotel'] = $hotel; 
             return $hotel;
         }
 
@@ -43,8 +57,7 @@
         public function fetchHotelToCompare($id) {
             $sql = "SELECT * from hotel WHERE id=$hotelID";
             $result = $this->conn->query($sql);
-            $hotel = $result->fetch_assoc();
-        
+            $hotel = $result->fetch_assoc(); 
             echo json_encode($hotel);
         }
 
@@ -52,8 +65,7 @@
         public function fetchHotels() {
             $sql = "SELECT * FROM hotel;";
             $result = $this->conn->query($sql);
-            $hotels = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    
+            $hotels = mysqli_fetch_all($result, MYSQLI_ASSOC); 
             return $hotels;
         }
 
@@ -70,18 +82,16 @@
                 '".$booking->getCheckOut()."',
                 '".$booking->getTotalNights()."',
                 '".$booking->getTotalCost()."',
-                'CONFIRMED'
+                '".$booking->getBookingStatus()."'
             )";
-            $this->conn->query($sql);
-            $this->endConn();
+            $this->conn->query($sql); 
         }
 
         // fetch booking
         public function fetchBooking($id) {
             $sql = "SELECT * FROM booking where id='$id';";
             $result = $this->conn->query($sql);
-            $booking = $result->fetch_assoc();
-    
+            $booking = $result->fetch_assoc(); 
             return $booking;
         }
 
@@ -93,6 +103,12 @@
                 $bookings = $result->fetch_all();
                 return $bookings;
             }
+        }
+
+        //update booking status
+        public function updateBookingStatus($id, $status) {
+            $sql = "UPDATE booking SET status='$status' WHERE booking.id='$id'";
+            $result = $this->conn->query($sql);
         }
 
     }

@@ -7,6 +7,10 @@
     session_start();    
     $db = new DB;
 
+    if($db->getTablesCreated() === false) {
+        $db->createTables();
+    };
+
     // initialise hotels variable in session
     $_SESSION['hotels'] = [];
 
