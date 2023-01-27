@@ -10,18 +10,35 @@
     $bookings = $db->fetchAllBookings($user->getID()) ?? [];
     if($bookings) {
         foreach($bookings as $booking) {
-            $booking = new Booking(
-                $user->getID(),
-                $user->getEmail(),
-                $booking[3],
-                $booking[4],
-                $booking[8],
-                $booking[5],
-                $booking[6],
-                $booking[7],
-                $booking[9]
+            // update booking status
+            if(date("Y-m-d") >= $booking[5] && date("Y-m-d") <= $booking[6]) {
+                $booking[9] = 'IN PROGRESS';
+            } elseif(date("Y-m-d") >= $booking[6]) {
+                $booking[9] = 'COMPLETED';
+            } elseif($booking[9] === 'CANCELLED') {
+                continue;
+            } else {
+                $booking[9] = 'CONFIRMED';
+            }
+
+            // update booking status in db
+            // param = booking ID, booking status
+            $db->updateBookingStatus($booking[0], $booking[9]);
+
+            // create booking object
+            $bookingObj = new Booking(
+                $booking[1], // user ID
+                $booking[2], // user email
+                $booking[3], // hotel ID
+                $booking[4], // hotel name
+                $booking[5], // check-in date
+                $booking[6], // check-out date
+                $booking[7], // total nights
+                $booking[8], // total cost
+                $booking[9] // booking status
             );
-            array_push($_SESSION['bookings'], serialize($booking));
+            // add booking objects to session
+            array_push($_SESSION['bookings'], serialize($bookingObj));
         }
     }
 
