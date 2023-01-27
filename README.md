@@ -17,7 +17,7 @@ Technologies used
 - CSS
 - XAMPP
 
-- Getting started using XAMPP
+Getting started using XAMPP
 - Navigate to the 'htdocs' folder on your local machine in your XAMMP directory
 - Clone the project into this directory
 - Run MYSQL and APACHE
