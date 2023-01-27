@@ -55,15 +55,15 @@
                     <div class="check-in-wrapper">
                         <label for="check-in">Check-in date:</label>
                         <input type="date" name="check-in" value="<?php echo $_POST['check-in'] ?? ''; ?>">
-                        <p class="error"><?php echo $hotelDates[1][1] ?? ''; ?></p>
+                        <p class="error"><?php echo $_SESSION['hotelDates'][1][1] ?? ''; ?></p>
                     </div>
                     <div class="check-out-wrapper">
                         <label for="check-in">Check-out date:</label>
                         <input type="date" name="check-out" value="<?php echo $_POST['check-out'] ?? ''; ?>">
-                        <p class="error"><?php echo $hotelDates[1][2] ?? ''; ?></p>
+                        <p class="error"><?php echo $_SESSION['hotelDates'][1][2] ?? ''; ?></p>
                     </div>
 
-                    <p class="error"><?php echo $hotelDates[1][0] ?? ''; ?></p>
+                    <p class="error"><?php echo $_SESSION['hotelDates'][1][0] ?? ''; ?></p>
 
                     <input type="submit" value="Book" name="booking-hotel">
                 </form>
