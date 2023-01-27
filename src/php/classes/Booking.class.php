@@ -6,11 +6,11 @@
         private $email;
         private $hotelID;
         private $hotelName;
-        private $totalCost;
         private $checkIn;
         private $checkOut;
         private $totalNights;
-        public $bookingStatus = false;
+        private $totalCost;
+        public $bookingStatus;
 
         function __construct(
                 $userID,
@@ -31,7 +31,7 @@
             $this->checkOut = $checkOut;
             $this->totalNights = $totalNights;
             $this->totalCost = $totalCost;
-            $bookingStatus;
+            $this->$bookingStatus = $bookingStatus;
         }
 
         public function getUserID() {

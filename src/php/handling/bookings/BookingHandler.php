@@ -28,6 +28,9 @@
                     $_SESSION['booking-information']['totalNights'] = $this->utils->dateDifference($_SESSION['booking-information']['check-in'], $_SESSION['booking-information']['check-out']);
                     $_SESSION['booking-information']['totalStayCost'] = $this->utils->totalStayCost($_SESSION['booking-information']['totalNights'], $_SESSION['hotel']['daily_rate']);
                     header('Location: /hotel-booking-app/src/views/confirmBooking.view.php');
+                } else {
+                    $_SESSION['hotelDates'] = $hotelDates;
+                    header('Location: /hotel-booking-app/src/views/hotelDetails.view.php/?id='.$_GET['id']);
                 }
             } 
         }
@@ -45,7 +48,7 @@
                 $_SESSION['booking-information']['check-out'],
                 $_SESSION['booking-information']['totalNights'],
                 $_SESSION['booking-information']['totalStayCost'],
-                false
+                ''
             );
 
             $user = serialize($user);
