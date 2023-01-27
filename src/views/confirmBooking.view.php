@@ -70,7 +70,7 @@
                 <p>Name: <span id="hotel-name"></span></p>
                 <p>Daily rate: R<span id="daily_rate"></span></p>
                 <p>Rating: <span id="rating"></span></p>
-                <a href="" id="hotel_link">Book</a>
+                <a href="" class="btn" id="hotel_link">Book</a>
                 <img src="" alt="" id="thumnbail" width="400" height="400">
             </div>
 
