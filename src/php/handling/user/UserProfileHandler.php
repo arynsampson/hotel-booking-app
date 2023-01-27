@@ -30,6 +30,4 @@
         header('Location: /hotel-booking-app/src/views/userProfile.view.php');
     }
 
-    // CHECK WHY BELOW DOESN"T WORK
-    //require '../../views/user_handling.view.php';
 ?>
