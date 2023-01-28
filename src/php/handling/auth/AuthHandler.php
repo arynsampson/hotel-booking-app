@@ -33,7 +33,7 @@
                 $errors = false;
             }  else {
                 $_SESSION['registerErrors'] = $userInputData;
-                header('Location: ../../../views/register.view.php');
+                header('Location: /hotel-booking-app/src/views/register.view.php');
             }
     
             if(!$doesUserExist & !$errors) {
@@ -46,15 +46,11 @@
                 $userId = $result->fetch_assoc();
     
                 $newUserObj = new User($userId['id'], $userInputData['firstname'], $userInputData['lastname'], $userInputData['email'], $userInputData['password']);
-    
-                // $_SESSION['user'] = serialize($new_user);
-                // $_SESSION['isLoggedIn'] = true;
-                // $_SESSION['bookings'] = [];
 
                 header('Location: /hotel-booking-app/index.php');
             } else {
                 $_SESSION['error'] = 'The email address entered is already associated with a registered account.';
-                header('Location: ../../../views/register.view.php');
+                header('Location: /hotel-booking-app/src/views/register.view.php');
             }
         }
 

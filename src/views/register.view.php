@@ -30,22 +30,24 @@
                     <div class="input-field col s12">
                       <label for="first_name">First name:</label>
                       <input id="first_name" type="text" class="validate" name="firstname" required>
-                      <p><?php echo $user_input_data['firstname']['error'] ?? '' ?></p>
+                      <p class="register-error"><?php echo $_SESSION['registerErrors']['firstname']['error'] ?? '' ?></p>
                     </div>
                     <div class="input-field col s12">
                       <input id="last_name" type="text" class="validate" name="lastname" required>
                       <label for="last_name">Last name:</label>
+                      <p class="register-error"><?php echo $_SESSION['registerErrors']['lastname']['error'] ?? '' ?></p>
                     </div>
                     <div class="input-field col s12">
                       <input id="email" type="email" class="validate" name="email" required>
                       <label for="email">Email:</label>
+                      <p class="register-error"><?php echo $_SESSION['registerErrors']['email']['error'] ?? '' ?></p>
                     </div>
                     <div class="input-field col s12">
+                      <p class="register-error"><?php echo $_SESSION['registerErrors']['password']['error'] ?? '' ?></p>
                       <input id="password" type="password" class="validate" name="password" required>
                       <label for="password">Password:</label>
                     </div>
                   </div>
-                  <p><?php echo $_SESSION['error'] ?? '' ?></p>
                   <div class="row">
                     <div class="input-field col s12">
                       <input id="submit" type="submit" class="btn" name="submit" value="Register">

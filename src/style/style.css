@@ -206,6 +206,10 @@ ul {
     grid-row: 1 / 3;
 }
 
+.register-error {
+    text-align: left;
+}
+
 .error {
     color: red;
     margin: 2px 0;
