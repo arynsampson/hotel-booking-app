@@ -36,9 +36,11 @@
                 header('Location: ../../../views/register.view.php');
             }
     
-            if(!$doesUserExist & $errors === false) {
+            if(!$doesUserExist & !$errors) {
+                $userInputData['password'] = password_hash($userInputData['password'], PASSWORD_BCRYPT);
                 $addUserToDb = $this->auth->addUserToDB($userInputData);
-    
+                
+                // get user id for user object property
                 $sql = "SELECT id FROM user WHERE user.email='".$userInputData['email']."'";
                 $result = $this->auth->conn->query($sql);
                 $userId = $result->fetch_assoc();
@@ -66,17 +68,25 @@
         
             if($doesUserExist) {
                 $user = $this->auth->fetchUser($userInputData['email']);
+
+                if($user['email'] === $userInputData['email'] && 
+                   password_verify($userInputData['password'], $user['password'])) {
+
+                    $new_user = new User($user['id'], $user['firstname'], $user['lastname'], $user['email']);  
+                    $_SESSION['user'] = serialize($new_user);
+                    $_SESSION['isLoggedIn'] = true;
+                    $_SESSION['bookings'] = [];
     
-                $new_user = new User($user['id'], $user['firstname'], $user['lastname'], $user['email']);
-    
-                $_SESSION['user'] = serialize($new_user);
-                $_SESSION['isLoggedIn'] = true;
-                $_SESSION['bookings'] = [];
-    
-                header('Location: /hotel-booking-app/index.php');
+                    header('Location: /hotel-booking-app/index.php');
+                } else {
+                    // wrong detail entered
+                    $_SESSION['loginError'] = 'Incorrect details entered.';
+                    header('Location: /hotel-booking-app/src/views/login.view.php');
+                }
             } else {
                 // already existing user
-                $_SESSION['error'] = 'Account not found.';
+                $_SESSION['loginError'] = 'Account not found.';
+                header('Location: /hotel-booking-app/src/views/login.view.php');
             }
         }
 

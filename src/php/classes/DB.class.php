@@ -33,7 +33,7 @@
 
         // fetch user
         public function fetchUser($email) {
-            $sql = "SELECT id, firstname, lastname, email FROM user WHERE user.email = '$email'";
+            $sql = "SELECT id, firstname, lastname, email, password FROM user WHERE user.email = '$email'";
             
             $result = $this->conn->query($sql);
     
