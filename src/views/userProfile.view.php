@@ -42,6 +42,7 @@
                 
                 <input type="submit" value="Update" name="update">
             </form>
+            <?php echo $_SESSION['profileUpdateMessage'] ?? ''; ?>
         </div>
     </div>
 

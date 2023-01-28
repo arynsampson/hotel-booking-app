@@ -8,6 +8,7 @@
     $user = unserialize($_SESSION['user']);
 
     if(isset($_POST['update'])) {
+        $_SESSION['profileUpdateMessage'] = '';
         $db = new DB; $utils = new Utils;
         
         // validate user input
@@ -26,6 +27,7 @@
 
         // update session variable
         $_SESSION['user'] = serialize($user);
+        $_SESSION['profileUpdateMessage'] = 'Details successfully updated.';
 
         header('Location: /hotel-booking-app/src/views/userProfile.view.php');
     }
