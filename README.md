@@ -22,3 +22,6 @@ Getting started using XAMPP
 - Clone the project into this directory
 - Run MYSQL and APACHE
 - Open your browser and navigate to 'localhost/hotel-booking-app/'
+
+Still would like to do
+- Implement AJAX to use error messages, validation messages, and user profile update messages on FE
