@@ -84,6 +84,7 @@
         }
 
         // validate user lastname input
+        // TODO: remove this
         public function validateLastname($input) {
             if(strlen($input) < 2) {
               return array(
