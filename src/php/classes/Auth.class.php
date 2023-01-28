@@ -14,8 +14,8 @@
             $insertUserIntoDb = $db->conn->query($sql);
         }
 
-        public function fetchLoginUser() {
+        // public function fetchLoginUser() {
 
-        }
+        // }
 
     }

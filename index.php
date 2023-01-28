@@ -7,6 +7,7 @@
     session_start();    
     $db = new DB;
 
+    // create tables if do not exiist
     if($db->getTablesCreated() === false) {
         $db->createTables();
     };
