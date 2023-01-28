@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +16,7 @@
 </head>
 <body>
 
-    <?php session_start(); require '../../src/templates/header.template.php'; ?>
+    <?php require '../../src/templates/header.template.php'; ?>
 
     <div class="bg-image">
       <h1>Sign in</h1>
@@ -37,7 +41,7 @@
                       <input id="submit" type="submit" class="btn" name="submit" value="Sign in">
                     </div>
                   </div>
-                  <p><?php echo $_SESSION['error'] ?? '' ; ?></p>
+                  <p><?php echo $_SESSION['loginError'] ?? '' ; ?></p>
                 </form>
               </div>
             </div>
