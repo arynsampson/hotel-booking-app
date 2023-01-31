@@ -25,3 +25,4 @@ Getting started using XAMPP
 
 Still would like to do
 - Implement AJAX to use error messages, validation messages, and user profile update messages on FE
+- Use regex for user input validation
