@@ -5,6 +5,11 @@
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/user.php';
 
     $db = new DB;
+
+    // booking status needs page refresh to display
+    if(isset($_POST['refresh'])) {
+        header('Location: bookings.view.php');
+    }
     
     $_SESSION['bookings'] = [];
     $bookings = $db->fetchAllBookings($user->getID()) ?? [];
@@ -60,6 +65,10 @@
     <?php require '../../src/templates/header.template.php'; ?>
 
     <div class="main-container">
+        <form action="bookings.view.php" method="POST">
+            <input type="submit" class="refresh-btn" value="Click here to refresh the table to get booking statuses" name="refresh">
+        </form>
+    
         <table>
             <tr>
                 <th>Booking #</th>

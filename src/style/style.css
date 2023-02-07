@@ -218,3 +218,15 @@ ul {
 select, option {
     display: block;
 }
+
+.refresh-btn {
+    background-color: white;
+    margin-top: 10px;
+    border: none;
+}
+
+.refresh-btn:hover {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
