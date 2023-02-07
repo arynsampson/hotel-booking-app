@@ -46,16 +46,19 @@
             </div>
 
             <div class="booking-info-wrapper">
-                <h4>Hotel details:</h4>
-                <div class="booking-info">
-                    <p>Hotel name: <?php echo $_SESSION['booking-information']['name']; ?></p>
-                    <p>Rating: <?php echo $_SESSION['hotel']['rating']; ?></p>
-                    <p>Check-in: <?php echo $_SESSION['booking-information']['check-in']; ?></p>
-                    <p>Check-out: <?php echo $_SESSION['booking-information']['check-out']; ?></p>
-                    <p>Amount of nights: <?php echo $_SESSION['booking-information']['totalNights']; ?></p>
-                    <p>Price per night: R<?php echo $_SESSION['booking-information']['daily_rate']; ?></p>
-                    <p>Total cost: R<?php echo $_SESSION['booking-information']['totalStayCost']; ?></p>
+                <div>
+                    <h4>Hotel details:</h4>
+                    <div class="booking-info">
+                        <p>Hotel name: <?php echo $_SESSION['booking-information']['name']; ?></p>
+                        <p>Rating: <?php echo $_SESSION['hotel']['rating']; ?></p>
+                        <p>Check-in: <?php echo $_SESSION['booking-information']['check-in']; ?></p>
+                        <p>Check-out: <?php echo $_SESSION['booking-information']['check-out']; ?></p>
+                        <p>Amount of nights: <?php echo $_SESSION['booking-information']['totalNights']; ?></p>
+                        <p>Price per night: R<?php echo $_SESSION['booking-information']['daily_rate']; ?></p>
+                        <p>Total cost: R<?php echo $_SESSION['booking-information']['totalStayCost']; ?></p>
+                    </div>
                 </div>
+                <img src="<?php echo $_SESSION['hotel']['thumbnail']; ?>" class="confirm-booking-hotel-image" alt="user-selected-hotel-image">
             </div>
 
             <div class="compare-hotel-wrapper">
