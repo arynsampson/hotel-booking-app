@@ -48,7 +48,7 @@
                 $_SESSION['booking-information']['check-out'],
                 $_SESSION['booking-information']['totalNights'],
                 $_SESSION['booking-information']['totalStayCost'],
-                ''
+                'CONFIRMED'
             );
 
             $user = serialize($user);

@@ -31,7 +31,7 @@
             $this->checkOut = $checkOut;
             $this->totalNights = $totalNights;
             $this->totalCost = $totalCost;
-            $this->$bookingStatus = $bookingStatus;
+            $this->bookingStatus = $bookingStatus;
         }
 
         public function getUserID() {
