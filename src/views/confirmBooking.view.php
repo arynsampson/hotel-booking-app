@@ -1,11 +1,13 @@
 <?php
 
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/user.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
+    session_start();
 
     $db = new DB;
 
     $hotels = $db->fetchHotels();
+    $user = unserialize($_SESSION['user']);
 
     foreach($hotels as $hotel) {
         if($hotel['id'] === $_SESSION['hotel']['id']) {
@@ -90,4 +92,4 @@
     <script src="../js/script.js"></script>
     
 </body>
-</html>
+</html> 
