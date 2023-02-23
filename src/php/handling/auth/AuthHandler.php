@@ -87,9 +87,13 @@
         }
 
         public function logout() {
+            $path = $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/views/';
+            array_map('unlink', glob($path."*.txt"));
+
             session_unset();
             session_destroy();
             session_start();
+
             $_SESSION = [];
             $_SESSION['isLoggedIn'] = false;
 
