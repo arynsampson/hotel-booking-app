@@ -76,7 +76,7 @@
                 "check-in" => $bookingInfo['check_in_date'],
                 "check-out" => $bookingInfo['check_out_date'],
                 "num_nights" => 4,
-                "total_cost" => $bookingInfo['total'],
+                "total_cost" => $bookingInfo['totalCost'],
                 "booking_created" => $bookingInfo['created_at'],
                 "booking_status" => $bookingInfo['status']
             );
@@ -87,7 +87,7 @@
             file_put_contents('booking_receipt_'.$bookingInfo['id'].'.txt', $data);
 
             // navigate to bookings page
-            header('Location: /hotel-booking-app/src/views/bookings.view.php');
+            // header('Location: /hotel-booking-app/src/views/bookings.view.php');
         }
 
         // cancel a booking
@@ -116,19 +116,21 @@
     }
 
     $bookingHandler = new BookingHandler;
-    $action = $_GET['action'];
+    if(isset($_GET['action'])) {
+        $action = $_GET['action'];
 
-    switch($action) {
-        case 'Cancel': 
-            $bookingHandler->cancelBooking($_GET['id']);
-            break;
-        case 'Confirm': 
-            $bookingHandler->confirmBooking();
-            break;
-        case 'Receipt': 
-            $bookingHandler->downloadReceipt($_GET['id']);
-            break;                    
-        case 'Dates': 
-            $bookingHandler->confirmHotelDates();
-            break;                    
+        switch($action) {
+            case 'Cancel': 
+                $bookingHandler->cancelBooking($_GET['id']);
+                break;
+            case 'Confirm': 
+                $bookingHandler->confirmBooking();
+                break;
+            case 'Receipt': 
+                $bookingHandler->downloadReceipt($_GET['id']);
+                break;                    
+            case 'Dates': 
+                $bookingHandler->confirmHotelDates();
+                break;                    
+        }
     }

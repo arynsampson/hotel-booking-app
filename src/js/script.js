@@ -14,3 +14,15 @@ function showHotel(num) {
     xmlhttp.open("GET","../php/handling/hotel/HotelHandler.php/?action=fetchHotel&id="+num);
     xmlhttp.send();
 }
+
+function generateReceipt(id) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let responseData = JSON.parse(this.responseText);
+            //console.log(responseData);
+        }
+    };
+    xmlhttp.open("GET","../php/handling/bookings/BookingHandler.php/?action=Receipt&id="+id);
+    xmlhttp.send();
+}

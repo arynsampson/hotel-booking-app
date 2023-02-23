@@ -2,17 +2,15 @@
 
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Booking.class.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/user.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/handling/bookings/BookingHandler.php';
 
     $db = new DB;
-
-    // booking status needs page refresh to display
-    if(isset($_POST['refresh'])) {
-        header('Location: bookings.view.php');
-    }
+    $bookingHandler = new BookingHandler;
     
     $_SESSION['bookings'] = [];
+    $user = unserialize($_SESSION['user']);
     $bookings = $db->fetchAllBookings($user->getID()) ?? [];
+
     if($bookings) {
         foreach($bookings as $booking) {
             // update booking status
@@ -27,8 +25,11 @@
             }
 
             // update booking status in db
-            // param = booking ID, booking status
+            // @param = booking ID, booking status
             $db->updateBookingStatus($booking[0], $booking[9]);
+
+            // create booking receipts
+            $bookingHandler->downloadReceipt($booking[0]);
 
             // create booking object
             $bookingObj = new Booking(
@@ -65,9 +66,6 @@
     <?php require '../../src/templates/header.template.php'; ?>
 
     <div class="main-container">
-        <form action="bookings.view.php" method="POST">
-            <input type="submit" class="refresh-btn" value="Click here to refresh the table to get booking statuses" name="refresh">
-        </form>
     
         <table>
             <tr>
@@ -89,9 +87,8 @@
                     <td><?php echo $booking[10] ?></td>
                     <td><?php echo $booking[9] ?></td>
                     <td>
-                        <form action="<?php echo '../php/handling/bookings/BookingHandler.php/?action=Receipt&id='.$booking[0]; ?>" method="POST">
-                            <input type="submit" value="Receipt" name="receipt">
-                        </form></td>
+                        <a href="<?php echo "./booking_receipt_".$booking[0].".txt";?>" download>Download receipt</a>
+                    </td>
                     <td>
                         <?php if($booking[9] === "CONFIRMED"): ?>
                             <form action="<?php echo '../php/handling/bookings/BookingHandler.php/?action=Cancel&id='.$booking[0]; ?>" method="POST">
@@ -103,6 +100,7 @@
             <?php endforeach; ?>
         </table>
         <p><?php echo $_SESSION['cancel_message'] ?? ''; ?></p>
+
     </div>
 
     <script src="../js/script.js"></script>
