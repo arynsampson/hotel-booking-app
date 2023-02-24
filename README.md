@@ -27,7 +27,7 @@ Still would like to do
 - Implement AJAX to use error messages, validation messages, and user profile update messages on FE
 - Use regex for user input validation
 
-FIXES
+## FIXES
 
 23/02/2023
   - added fix to allow receipts to be download to user device
