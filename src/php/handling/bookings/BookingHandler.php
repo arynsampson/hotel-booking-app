@@ -91,7 +91,7 @@
     
             if($datesDifference > 2) {
                 $sql = "UPDATE booking SET status='CANCELLED' WHERE booking.id='$id'";
-                $result = DB::conn->query($sql);
+                $result = DB::$conn->query($sql);
                 foreach($_SESSION['bookings'] as $booking) {
                     $booking = unserialize($booking);
                     if($booking->getHotelID() === $id) {
