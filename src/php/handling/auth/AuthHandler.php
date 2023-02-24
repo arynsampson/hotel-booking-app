@@ -1,6 +1,7 @@
 <?php
 
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Auth.class.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/DB.class.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Utils.class.php';
     session_start();
@@ -8,23 +9,21 @@
     class AuthHandler extends Auth {
 
         public $auth;
-        public $utils;
 
         public function __construct() {
             $this->auth = new Auth;
-            $this->utils = new Utils;
         }
 
         public function register() {
             $errors = true;
             $userInputData = array(
-                'firstname' => $this->utils->validateFirstname($_POST['firstname']),
-                'lastname' => $this->utils->validateLastname($_POST['lastname']),
-                'email' => $this->utils->validateEmail($_POST['email']),
-                'password' => $this->utils->validatePassword($_POST['password']),
+                'firstname' => Utils::validateFirstname($_POST['firstname']),
+                'lastname' => Utils::validateLastname($_POST['lastname']),
+                'email' => Utils::validateEmail($_POST['email']),
+                'password' => Utils::validatePassword($_POST['password']),
             );
       
-            $doesUserExist = $this->utils->checkUserExists($userInputData['email']);
+            $doesUserExist = Utils::checkUserExists($userInputData['email']);
 
             if(!isset($userInputData['firstname']['error']) &&
             !isset($userInputData['lastname']['error']) &&
@@ -42,7 +41,7 @@
                 
                 // get user id for user object property
                 $sql = "SELECT id FROM user WHERE user.email='".$userInputData['email']."'";
-                $result = $this->auth->conn->query($sql);
+                $result = DB::$conn->query($sql);
                 $userId = $result->fetch_assoc();
     
                 $newUserObj = new User($userId['id'], $userInputData['firstname'], $userInputData['lastname'], $userInputData['email'], $userInputData['password']);
@@ -56,14 +55,14 @@
 
         public function login() {
             $userInputData = array(
-                'email' => $this->utils->validateEmail($_POST['email']),
-                'password' => $this->utils->validatePassword($_POST['password'])
+                'email' => Utils::validateEmail($_POST['email']),
+                'password' => Utils::validatePassword($_POST['password'])
             );
         
-            $doesUserExist = $this->utils->checkUserExists($userInputData['email']);
+            $doesUserExist = Utils::checkUserExists($userInputData['email']);
         
             if($doesUserExist) {
-                $user = $this->auth->fetchUser($userInputData['email']);
+                $user = DB::fetchUser($userInputData['email']);
 
                 if($user['email'] === $userInputData['email'] && 
                    password_verify($userInputData['password'], $user['password'])) {

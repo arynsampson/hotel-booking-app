@@ -2,21 +2,21 @@
 
     require_once 'DB.class.php';
 
-    class Utils extends DB {
+    class Utils {
         
         // get the difference between two dates
-        public function dateDifference($date1, $date2) {
+        public static function dateDifference($date1, $date2) {
             $dateDifferenceAmount = date_diff(date_create($date1), date_create($date2));
             return $dateDifferenceAmount->format("%a");
         }
 
         // calculate the total cost of the user stay
-        public function totalStayCost($numOfDays, $dailyRate) {
+        public static function totalStayCost($numOfDays, $dailyRate) {
             return $numOfDays * $dailyRate;
         }
 
         // Validate user date input
-        public function validateDates($date1, $date2) {
+        public static function validateDates($date1, $date2) {
             $hotelDates = array(
                 ['check-in' => '', 'check-out' => '']
             );
@@ -44,7 +44,7 @@
         }
 
         // validate user email
-        public function validateEmail($email) {
+        public static function validateEmail($email) {
             if(strlen($email) < 2) {
                 return array(
                     'email' => $email, 
@@ -57,7 +57,7 @@
         }
 
         // validate user password
-        public function validatePassword($password) {
+        public static function validatePassword($password) {
             if(strlen($password) < 5) {
                 return array(
                     'password' => '', 
@@ -69,7 +69,7 @@
         }
 
         // validate user firstname input
-        public function validateFirstname($input) {
+        public static function validateFirstname($input) {
             if(strlen($input) < 2) {
               return array(
                 "firstname" => $input,
@@ -85,7 +85,7 @@
 
         // validate user lastname input
         // TODO: remove this
-        public function validateLastname($input) {
+        public static function validateLastname($input) {
             if(strlen($input) < 2) {
               return array(
                 "lastname" => $input,
@@ -100,11 +100,9 @@
         }
 
         // check if user exists in db
-        public function checkUserExists($email) {
-            $db = new DB;
-
+        public static function checkUserExists($email) {
             $sql = "SELECT * FROM user WHERE user.email = '$email'";
-            $result = $db->conn->query($sql);
+            $result = DB::$conn->query($sql);
 
             if($result->num_rows < 1) {
                 return false;

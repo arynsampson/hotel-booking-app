@@ -8,25 +8,17 @@
 
     class BookingHandler {
 
-        public $utils;
-        public $db;
-
-        public function __construct() {
-            $this->utils = new Utils;
-            $this->db = new DB;
-        }
-
         // confirm booking dates
         public function confirmHotelDates() {
             if(isset($_POST['booking-hotel'])) {
-                $hotelDates = $this->utils->validateDates($_POST['check-in'], $_POST['check-out']);
+                $hotelDates = Utils::validateDates($_POST['check-in'], $_POST['check-out']);
         
                 if($hotelDates[1][0] === '' && $hotelDates[1][1] === '' && $hotelDates[1][2] === '') {
                     $_SESSION['booking-information'] = $_POST;
                     $_SESSION['booking-information']['name'] = $_SESSION['hotel']['name'];
                     $_SESSION['booking-information']['daily_rate'] = $_SESSION['hotel']['daily_rate'];
-                    $_SESSION['booking-information']['totalNights'] = $this->utils->dateDifference($_SESSION['booking-information']['check-in'], $_SESSION['booking-information']['check-out']);
-                    $_SESSION['booking-information']['totalStayCost'] = $this->utils->totalStayCost($_SESSION['booking-information']['totalNights'], $_SESSION['hotel']['daily_rate']);
+                    $_SESSION['booking-information']['totalNights'] = Utils::dateDifference($_SESSION['booking-information']['check-in'], $_SESSION['booking-information']['check-out']);
+                    $_SESSION['booking-information']['totalStayCost'] = Utils::totalStayCost($_SESSION['booking-information']['totalNights'], $_SESSION['hotel']['daily_rate']);
                     header('Location: /hotel-booking-app/src/views/confirmBooking.view.php');
                 } else {
                     $_SESSION['hotelDates'] = $hotelDates;
@@ -54,7 +46,7 @@
             $user = serialize($user);
             $booking = serialize($booking);
 
-            $this->db->addBookingToDB($user, $booking);
+            DB::addBookingToDB($user, $booking);
             header('Location: /hotel-booking-app');
         }
 
@@ -63,7 +55,7 @@
             $user = unserialize($_SESSION['user']);
 
             // get booking info
-            $bookingInfo = $this->db->fetchBooking($id);
+            $bookingInfo = DB::fetchBooking($id);
             
             // create booking array
             $bookingReceipt = array (
@@ -93,13 +85,13 @@
         // cancel a booking
         public function cancelBooking($id) {
             $_SESSION['cancel_error'] = '';
-            $booking = $this->db->fetchBooking($id);
+            $booking = DB::fetchBooking($id);
             $currentDate = date('Y-m-d');
-            $datesDifference = $this->utils->dateDifference($currentDate, $booking['check_in_date']);
+            $datesDifference = Utils::dateDifference($currentDate, $booking['check_in_date']);
     
             if($datesDifference > 2) {
                 $sql = "UPDATE booking SET status='CANCELLED' WHERE booking.id='$id'";
-                $result = $this->db->conn->query($sql);
+                $result = DB::conn->query($sql);
                 foreach($_SESSION['bookings'] as $booking) {
                     $booking = unserialize($booking);
                     if($booking->getHotelID() === $id) {

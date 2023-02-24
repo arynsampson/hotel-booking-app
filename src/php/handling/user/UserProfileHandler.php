@@ -8,12 +8,11 @@
     $user = unserialize($_SESSION['user']);
 
     if(isset($_POST['update'])) {
-        $db = new DB; $utils = new Utils;
         
         // validate user input
-        $firstname = $utils->validateFirstname($_POST['firstname_update']);
-        $lastname = $utils->validateLastname($_POST['lastname_update']);
-        $email = $utils->validateEmail($_POST['email_update']);
+        $firstname = Utils::validateFirstname($_POST['firstname_update']);
+        $lastname = Utils::validateLastname($_POST['lastname_update']);
+        $email = Utils::validateEmail($_POST['email_update']);
 
         if(!isset($firstname['error']) && !isset($lastname['error']) && !isset($email['error'])) {
             // update user object
