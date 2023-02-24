@@ -4,12 +4,11 @@
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/Booking.class.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/handling/bookings/BookingHandler.php';
 
-    $db = new DB;
     $bookingHandler = new BookingHandler;
     
     $_SESSION['bookings'] = [];
     $user = unserialize($_SESSION['user']);
-    $bookings = $db->fetchAllBookings($user->getID()) ?? [];
+    $bookings = DB::fetchAllBookings($user->getID()) ?? [];
 
     if($bookings) {
         foreach($bookings as $booking) {
@@ -26,7 +25,7 @@
 
             // update booking status in db
             // @param = booking ID, booking status
-            $db->updateBookingStatus($booking[0], $booking[9]);
+            DB::updateBookingStatus($booking[0], $booking[9]);
 
             // create booking receipts
             $bookingHandler->downloadReceipt($booking[0]);

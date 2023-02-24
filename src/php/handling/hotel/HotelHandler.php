@@ -7,15 +7,9 @@
 
     class HotelHandler {
 
-        public $db;
-
-        public function __construct() {
-            $this->db = new DB;
-        }
-
         public function fetchHotelToCompare($id) {
             $sql = "SELECT * from hotel WHERE id=$id";
-            $result = $this->db->conn->query($sql);
+            $result = DB::$conn->query($sql);
             $hotel = $result->fetch_assoc();
         
             echo json_encode($hotel);

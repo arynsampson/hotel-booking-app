@@ -4,9 +4,7 @@
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/classes/User.class.php';
     session_start();
 
-    $db = new DB;
-
-    $hotels = $db->fetchHotels();
+    $hotels = DB::fetchHotels();
     $user = unserialize($_SESSION['user']);
 
     foreach($hotels as $hotel) {

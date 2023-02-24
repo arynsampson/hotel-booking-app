@@ -8,8 +8,7 @@
         header('Location: /hotel-booking-app/src/views/login.view.php');
     }
 
-    $db = new DB;
-    $hotel = $db->fetchHotel($_GET['id']);
+    $hotel = DB::fetchHotel($_GET['id']);
 
 ?> 
 

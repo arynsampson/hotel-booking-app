@@ -3,39 +3,35 @@
     require_once $_SERVER['DOCUMENT_ROOT'].'/hotel-booking-app/src/php/tables.php';
 
     class DB {
-        private $server = 'localhost';
-        private $username = 'admin';
-        private $password = 'password1234';
-        private $db = 'hotel';
-        public $conn;
-        public $tablesCreated = false;
+        private static $server = 'localhost';
+        private static $username = 'admin';
+        private static $password = 'password1234';
+        private static $db = 'hotel';
+        public static $conn;
+        public static $tablesCreated = false;
 
-        public function __construct() {
-            $this->conn = new mysqli($this->server, $this->username, $this->password, $this->db);
-        }
-
-        public function endConn() {
-            $this->conn->close();
+        static public function init() {
+            self::$conn = new mysqli(self::$server, self::$username, self::$password, self::$db);
         }
 
         // create tables
-        public function createTables() {
+        public static function createTables() {
             global $bookingTable; global $hotelTable; global $userTable;  
-            $this->conn->query($bookingTable);
-            $this->conn->query($userTable);
-            $this->conn->query($hotelTable);
-            $this->tablesCreated = true;
+            self::$conn->query($bookingTable);
+            self::$conn->query($userTable);
+            self::$conn->query($hotelTable);
+            self::$tablesCreated = true;
         }
 
-        public function getTablesCreated() {
-            return $this->tablesCreated;
+        public static function getTablesCreated() {
+            return self::$tablesCreated;
         }
 
         // fetch user
-        public function fetchUser($email) {
+        public static function fetchUser($email) {
             $sql = "SELECT id, firstname, lastname, email, password FROM user WHERE user.email = '$email'";
             
-            $result = $this->conn->query($sql);
+            $result = self::$conn->query($sql);
     
             if($result->num_rows > 0) {
                 $user = $result->fetch_assoc();
@@ -45,32 +41,32 @@
         }
 
         // fetch hotel
-        public function fetchHotel($id) {
+        public static function fetchHotel($id) {
             $sql = "SELECT * FROM hotel where id='$id';";
-            $result = $this->conn->query($sql);
+            $result = self::$conn->query($sql);
             $hotel = $result->fetch_assoc();
             $_SESSION['hotel'] = $hotel; 
             return $hotel;
         }
 
         // fetch hotel to compare to booking
-        public function fetchHotelToCompare($id) {
+        public static function fetchHotelToCompare($id) {
             $sql = "SELECT * from hotel WHERE id=$hotelID";
-            $result = $this->conn->query($sql);
+            $result = self::$conn->query($sql);
             $hotel = $result->fetch_assoc(); 
             echo json_encode($hotel);
         }
 
         // fetch all hotels
-        public function fetchHotels() {
+        public static function fetchHotels() {
             $sql = "SELECT * FROM hotel;";
-            $result = $this->conn->query($sql);
+            $result = self::$conn->query($sql);
             $hotels = mysqli_fetch_all($result, MYSQLI_ASSOC); 
             return $hotels;
         }
 
         // add booking to db
-        public function addBookingToDB($user, $booking) {
+        public static function addBookingToDB($user, $booking) {
             $user = unserialize($user);
             $booking = unserialize($booking);
             $sql = "INSERT INTO booking (user_id, email, hotel_id, hotel_name, check_in_date, check_out_date, totalNights, totalCost, status) VALUES (
@@ -84,21 +80,21 @@
                 '".$booking->getTotalCost()."',
                 '".$booking->getBookingStatus()."'
             )";
-            $this->conn->query($sql); 
+            self::$conn->query($sql); 
         }
 
         // fetch booking
-        public function fetchBooking($id) {
+        public static function fetchBooking($id) {
             $sql = "SELECT * FROM booking where id='$id';";
-            $result = $this->conn->query($sql);
+            $result = self::$conn->query($sql);
             $booking = $result->fetch_assoc(); 
             return $booking;
         }
 
         // fetch all bookings
-        public function fetchAllBookings($userID) {
+        public static function fetchAllBookings($userID) {
             $sql = "SELECT * FROM booking WHERE booking.user_id='$userID'";
-            $result = $this->conn->query($sql);
+            $result = self::$conn->query($sql);
             if($result->num_rows > 0) {
                 $bookings = $result->fetch_all();
                 return $bookings;
@@ -106,9 +102,12 @@
         }
 
         //update booking status
-        public function updateBookingStatus($id, $status) {
+        public static function updateBookingStatus($id, $status) {
             $sql = "UPDATE booking SET status='$status' WHERE booking.id='$id'";
-            $result = $this->conn->query($sql);
+            $result = self::$conn->query($sql);
         }
 
     }
+
+
+    DB::init();
